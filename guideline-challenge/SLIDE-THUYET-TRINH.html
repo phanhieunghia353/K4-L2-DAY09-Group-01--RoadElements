@@ -6,29 +6,23 @@
 <title>Group 1 — Guideline Design Challenge: Ego-Relevance of Traffic Signs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,500;0,7..72,700;1,7..72,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,560;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,560;0,7..72,700;1,7..72,560&display=swap" rel="stylesheet">
 <style>
   :root {
-    --asphalt: #121412;
-    --asphalt-2: #1b1f1a;
-    --asphalt-3: #242a22;
-    --asphalt-card: #181c17;
-    --paint: #f4f1ea;
-    --paint-dim: #b8b3a5;
-    --paint-faint: #78746a;
+    --asphalt: #141614;
+    --asphalt-2: #1e221c;
+    --asphalt-3: #272c24;
+    --paint: #f4f0e6;
+    --paint-dim: #c4bfb2;
+    --paint-faint: #807c72;
     --lane: #f0c400;
-    --lane-dim: #c29f00;
-    --lane-ink: #141200;
-    --stop: #e6392f;
-    --stop-bg: rgba(230, 57, 47, 0.12);
+    --lane-ink: #1a1600;
+    --stop: #e23b2f;
     --safe: #2bb673;
-    --safe-bg: rgba(43, 182, 115, 0.12);
     --warn: #f59e0b;
-    --warn-bg: rgba(245, 158, 11, 0.12);
     --info: #38bdf8;
-    --info-bg: rgba(56, 189, 248, 0.12);
-    --line: rgba(244, 241, 234, 0.14);
-    --shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    --line: rgba(244, 240, 230, 0.16);
+    --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
   }
 
   * { box-sizing: border-box; }
@@ -38,14 +32,14 @@
     overflow: hidden;
     background: var(--asphalt);
     color: var(--paint);
-    font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 20px;
-    line-height: 1.4;
+    font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
+    font-size: 17px;
+    line-height: 1.35;
     scrollbar-width: none;
   }
-  html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+  html::-webkit-scrollbar, body::-webkit-scrollbar, .slide::-webkit-scrollbar { display: none; }
 
-  /* Left Edge Road Marking */
+  /* Road Marking on Left Edge */
   .edge {
     position: fixed;
     z-index: 10;
@@ -53,12 +47,12 @@
     width: 16px;
     background: repeating-linear-gradient(
       to bottom,
-      var(--lane) 0 28px,
-      var(--asphalt) 28px 46px
+      var(--lane) 0 26px,
+      var(--asphalt) 26px 42px
     );
   }
 
-  /* Bars */
+  /* Fixed Bars */
   header.bar, footer.bar {
     position: fixed;
     z-index: 12;
@@ -66,18 +60,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 28px;
-    background: rgba(18, 20, 18, 0.94);
-    backdrop-filter: blur(10px);
+    padding: 10px 28px;
+    background: rgba(20, 22, 20, 0.94);
+    backdrop-filter: blur(8px);
   }
   header.bar { top: 0; border-bottom: 1px solid var(--line); }
-  footer.bar { bottom: 0; border-top: 1px solid var(--line); gap: 20px; }
+  footer.bar { bottom: 0; border-top: 1px solid var(--line); gap: 16px; }
 
   .brand {
     font-family: Literata, Georgia, serif;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    font-size: 14px;
+    letter-spacing: 0.06em;
+    font-size: 13px;
     text-transform: uppercase;
     display: flex;
     align-items: center;
@@ -87,50 +81,42 @@
     background: var(--lane);
     color: var(--lane-ink);
     padding: 2px 7px;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 11px;
-    letter-spacing: 0.05em;
     border-radius: 2px;
   }
-  .brand span.title { color: var(--paint); font-weight: 600; }
+  .brand span.title { color: var(--paint); font-weight: 560; }
   .brand span.accent { color: var(--lane); }
 
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
+  .header-actions { display: flex; align-items: center; gap: 14px; }
   .jump-menu {
     background: var(--asphalt-2);
     border: 1px solid var(--line);
     color: var(--paint);
     font-family: inherit;
     font-size: 13px;
-    padding: 4px 10px;
+    padding: 4px 8px;
     border-radius: 4px;
     cursor: pointer;
     outline: none;
   }
-  .jump-menu option { background: var(--asphalt-2); color: var(--paint); }
 
-  .hint { color: var(--paint-dim); font-size: 13px; }
+  .hint { color: var(--paint-dim); font-size: 12px; }
   kbd {
     font-family: inherit;
     border: 1px solid var(--line);
     border-bottom-width: 2px;
     padding: 1px 6px;
-    border-radius: 4px;
+    border-radius: 3px;
     color: var(--paint);
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .lane-track {
     flex: 1;
-    height: 5px;
-    background: rgba(244, 241, 234, 0.1);
+    height: 4px;
+    background: rgba(244, 240, 230, 0.12);
     position: relative;
-    border-radius: 3px;
     overflow: hidden;
   }
   .lane-track::before {
@@ -140,7 +126,7 @@
     background: repeating-linear-gradient(
       to right,
       transparent 0 10px,
-      rgba(244, 241, 234, 0.25) 10px 22px
+      rgba(244, 240, 230, 0.28) 10px 22px
     );
   }
   .lane-fill {
@@ -149,339 +135,307 @@
     width: 0;
     background: var(--lane);
     box-shadow: 0 0 14px var(--lane);
-    transition: width 0.25s ease-out;
+    transition: width 0.2s ease-out;
   }
   .km {
     font-variant-numeric: tabular-nums;
     font-weight: 700;
-    min-width: 90px;
+    min-width: 85px;
     text-align: right;
     letter-spacing: 0.04em;
-    font-size: 15px;
+    font-size: 14px;
   }
   .km b { color: var(--lane); }
 
   /* Deck & Slides */
   .deck {
     position: fixed;
-    inset: 56px 0 54px 16px;
+    inset: 50px 0 46px 16px;
   }
   .slide {
     display: none;
     height: 100%;
     overflow-y: auto;
-    scrollbar-width: none;
-    padding: 30px 54px 34px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(240, 196, 0, 0.3) transparent;
+    padding: 24px 64px 20px;
   }
-  .slide::-webkit-scrollbar { display: none; }
   .slide.is-on {
-    display: block;
-    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: rise 0.25s ease;
   }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(12px); }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: none; }
   }
 
   /* Typography */
   .kicker {
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     color: var(--lane);
     font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .kicker::before {
-    content: "";
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: var(--lane);
-    border-radius: 50%;
   }
   h1 {
     font-family: Literata, Georgia, serif;
-    font-weight: 600;
-    font-size: clamp(34px, 4.4vw, 56px);
+    font-weight: 560;
+    font-size: clamp(30px, 3.4vw, 46px);
     line-height: 1.1;
-    margin: 0 0 16px;
+    margin: 0 0 10px;
     letter-spacing: -0.02em;
   }
   h2 {
     font-family: Literata, Georgia, serif;
-    font-weight: 600;
-    font-size: clamp(26px, 3.2vw, 42px);
+    font-weight: 560;
+    font-size: clamp(24px, 2.6vw, 36px);
     line-height: 1.15;
-    margin: 0 0 18px;
+    margin: 0 0 10px;
     letter-spacing: -0.02em;
   }
-  p { margin: 0 0 14px; max-width: 68ch; }
-  .lead { font-size: 24px; color: var(--paint); font-weight: 400; line-height: 1.35; margin-bottom: 20px; }
+  p { margin: 0 0 10px; }
+  .lead { font-size: 19px; color: var(--paint); line-height: 1.35; margin-bottom: 14px; }
   .dim { color: var(--paint-dim); }
 
-  /* Utility Components */
+  /* Code & Pre */
+  code {
+    font-family: Consolas, "Cascadia Mono", monospace;
+    font-size: 0.9em;
+    background: rgba(240, 196, 0, 0.12);
+    color: var(--lane);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  pre {
+    margin: 8px 0;
+    padding: 10px 14px;
+    background: #0c0e0c;
+    border-left: 3px solid var(--lane);
+    font-family: Consolas, "Cascadia Mono", monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--paint);
+    border-radius: 2px;
+  }
+
+  /* Badges */
   .badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 9px;
-    font-size: 12px;
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    border-radius: 4px;
-    gap: 5px;
+    letter-spacing: 0.05em;
+    border-radius: 3px;
+    line-height: 1.2;
+    vertical-align: middle;
   }
   .badge-lane { background: var(--lane); color: var(--lane-ink); }
   .badge-stop { background: var(--stop); color: #fff; }
   .badge-safe { background: var(--safe); color: #fff; }
   .badge-warn { background: var(--warn); color: #1a1600; }
-  .badge-outline { border: 1px solid var(--line); color: var(--paint-dim); }
+  .badge-info { background: var(--info); color: #0a2540; }
 
+  /* Callout Boxes */
   .callout {
-    border-left: 5px solid var(--lane);
-    padding: 12px 18px;
+    border-left: 4px solid var(--lane);
+    padding: 10px 14px;
     background: rgba(240, 196, 0, 0.08);
-    margin: 14px 0;
-    border-radius: 0 6px 6px 0;
-    font-size: 17px;
+    margin: 10px 0 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 15px;
+    line-height: 1.4;
   }
   .callout.danger {
     border-left-color: var(--stop);
-    background: var(--stop-bg);
+    background: rgba(226, 59, 47, 0.12);
   }
   .callout.success {
     border-left-color: var(--safe);
-    background: var(--safe-bg);
+    background: rgba(43, 182, 115, 0.12);
   }
   .callout.info {
     border-left-color: var(--info);
-    background: var(--info-bg);
+    background: rgba(56, 189, 248, 0.12);
   }
 
+  /* Grids & Cards */
   .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 22px;
+    gap: 16px;
+    align-items: start;
   }
   .grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 14px;
+    align-items: stretch;
   }
   .grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+    gap: 12px;
+    align-items: stretch;
   }
 
   .card {
-    background: var(--asphalt-card);
+    background: var(--asphalt-2);
     border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 18px 20px;
-    position: relative;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    padding: 12px 14px;
   }
-  .card.lane-top { border-top: 4px solid var(--lane); }
-  .card.stop-top { border-top: 4px solid var(--stop); }
-  .card.safe-top { border-top: 4px solid var(--safe); }
-  .card.info-top { border-top: 4px solid var(--info); }
+  .card.lane-top { border-top: 3px solid var(--lane); }
+  .card.stop-top { border-top: 3px solid var(--stop); }
+  .card.safe-top { border-top: 3px solid var(--safe); }
+  .card.info-top { border-top: 3px solid var(--info); }
+  .card.warn-top { border-top: 3px solid var(--warn); }
   .card h3 {
-    margin: 0 0 8px;
-    font-size: 19px;
+    margin: 0 0 6px;
+    font-size: 16px;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   .card p {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--paint-dim);
-    margin: 0;
-    line-height: 1.45;
+    margin: 0 0 6px;
+    line-height: 1.4;
   }
+  .card p:last-child { margin-bottom: 0; }
   .card ul {
-    margin: 8px 0 0;
-    padding-left: 18px;
-    font-size: 15px;
+    margin: 4px 0 0;
+    padding-left: 16px;
+    font-size: 14px;
     color: var(--paint-dim);
   }
-  .card li { margin: 4px 0; }
-  .card code {
-    color: var(--lane);
-    background: rgba(240, 196, 0, 0.1);
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-size: 0.9em;
-  }
+  .card li { margin: 3px 0; }
 
+  /* Tables */
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 16px;
-    margin: 12px 0;
-    background: var(--asphalt-card);
+    font-size: 14px;
+    background: var(--asphalt-2);
     border: 1px solid var(--line);
-    border-radius: 6px;
-    overflow: hidden;
+    border-radius: 4px;
   }
   th, td {
     text-align: left;
-    padding: 10px 14px;
+    padding: 8px 10px;
     border-bottom: 1px solid var(--line);
     vertical-align: middle;
   }
   th {
     color: var(--lane);
-    font-size: 12px;
-    letter-spacing: 0.1em;
+    font-size: 11px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     font-weight: 700;
-    background: var(--asphalt-2);
+    background: #171a17;
   }
   tr:last-child td { border-bottom: 0; }
-  tr:hover td { background: rgba(255, 255, 255, 0.02); }
-
-  pre, code {
-    font-family: "JetBrains Mono", Consolas, monospace;
-  }
-  pre {
-    background: #0b0d0b;
-    border: 1px solid var(--line);
-    border-left: 4px solid var(--lane);
-    padding: 12px 16px;
-    border-radius: 4px;
-    font-size: 15px;
-    line-height: 1.45;
-    color: var(--paint);
-    margin: 10px 0;
-    overflow-x: auto;
-  }
 
   /* Nav Buttons */
   .nav-btn {
     position: fixed;
+    z-index: 15;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 15;
     width: 44px;
-    height: 64px;
-    background: rgba(27, 31, 26, 0.85);
-    border: 1px solid var(--line);
-    color: var(--paint);
+    height: 70px;
+    border: 0;
+    background: transparent;
+    color: var(--paint-dim);
+    font-size: 34px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
-    cursor: pointer;
-    backdrop-filter: blur(6px);
-    transition: all 0.15s ease;
+    transition: color 0.15s ease;
   }
-  .nav-btn:hover {
-    background: var(--lane);
-    color: var(--lane-ink);
-    border-color: var(--lane);
-  }
-  .nav-btn.prev { left: 16px; border-radius: 0 8px 8px 0; }
-  .nav-btn.next { right: 0; border-radius: 8px 0 0 8px; }
+  .nav-btn:hover { color: var(--lane); }
+  .nav-btn.prev { left: 18px; }
+  .nav-btn.next { right: 8px; }
+  .nav-btn:focus-visible { outline: 2px solid var(--lane); }
 
   /* Team Profile Styles */
   .team-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-top: 14px;
+    gap: 12px;
+    margin-top: 10px;
   }
   .team-card {
-    background: var(--asphalt-card);
+    background: var(--asphalt-2);
     border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 16px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-  .team-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--lane);
+    border-top: 3px solid var(--lane);
+    border-radius: 4px;
+    padding: 12px;
   }
   .team-card .role {
     font-size: 11px;
     font-weight: 700;
     color: var(--lane);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 4px;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
   }
   .team-card .name {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--paint);
     margin-bottom: 2px;
   }
   .team-card .id {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--paint-faint);
-    margin-bottom: 10px;
-    font-family: "JetBrains Mono", monospace;
+    margin-bottom: 8px;
+    font-family: Consolas, monospace;
   }
   .team-card .files {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--paint-dim);
-    line-height: 1.4;
+    line-height: 1.35;
     border-top: 1px solid var(--line);
-    padding-top: 8px;
+    padding-top: 6px;
   }
 
   /* Metric Pill */
   .metric-box {
-    display: flex;
-    flex-direction: column;
-    background: var(--asphalt-2);
+    background: var(--asphalt-3);
     border: 1px solid var(--line);
-    padding: 12px 16px;
-    border-radius: 6px;
+    padding: 10px 14px;
+    border-radius: 4px;
     text-align: center;
   }
   .metric-box .val {
-    font-size: 32px;
-    font-weight: 800;
+    font-size: 28px;
+    font-weight: 700;
     color: var(--lane);
     font-variant-numeric: tabular-nums;
+    line-height: 1.1;
   }
   .metric-box .label {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--paint-dim);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-top: 2px;
+    margin-top: 3px;
   }
 
-  /* Comparison Columns */
-  .compare-box {
-    padding: 14px 16px;
-    border-radius: 6px;
-    font-size: 15px;
-  }
-  .compare-box.ignore {
-    background: rgba(230, 57, 47, 0.08);
-    border: 1px dashed var(--stop);
-  }
-  .compare-box.not-rel {
-    background: rgba(245, 158, 11, 0.08);
-    border: 1px dashed var(--warn);
-  }
-  .compare-box.rel {
-    background: rgba(43, 182, 115, 0.08);
-    border: 1px solid var(--safe);
-  }
-
-  @media (max-width: 1024px) {
-    body { font-size: 18px; }
-    .grid-2, .grid-3, .grid-4, .team-grid { grid-template-columns: 1fr; }
-    .slide { padding: 24px 28px 30px; }
+  @media (max-height: 760px) {
+    body { font-size: 15px; }
+    .slide { padding: 16px 54px 14px; }
+    h1 { font-size: 32px; }
+    h2 { font-size: 26px; }
+    .lead { font-size: 16px; margin-bottom: 10px; }
+    .card { padding: 10px 12px; }
   }
 </style>
 </head>
@@ -493,20 +447,20 @@
 <header class="bar">
   <div class="brand">
     <span class="tag">GROUP 01</span>
-    <span class="title">EGO-RELEVANCE GUIDELINE</span>
-    <span class="accent">· GTSDB CHALLENGE</span>
+    <span class="title">Ego-Relevance Guideline</span>
+    <span class="accent">· GTSDB Challenge</span>
   </div>
   <div class="header-actions">
     <select class="jump-menu" id="jumpMenu" aria-label="Nhảy tới slide">
-      <option value="0">1. Giới thiệu Nhóm 1 & Bài toán</option>
-      <option value="1">2. Downstream Contract & Rủi ro</option>
-      <option value="2">3. Scope: 43 Class GTSDB vs Ngoại vi</option>
-      <option value="3">4. Bộ 3 Phân Quyết: IGNORE - NOT_REL - REL</option>
-      <option value="4">5. Quy chuẩn Hình học & Dung sai</option>
-      <option value="5">6. Thực chiến Calibration & Tranh biện</option>
-      <option value="6">7. Thư viện Edge Cases & 13 Gold Frozen</option>
-      <option value="7">8. Kế hoạch QA & Tiêu chí Quality Gates</option>
-      <option value="8">9. Quy trình Blind Handoff & Lộ trình v3</option>
+      <option value="0">01. Giới thiệu Nhóm 1 & Đề tài</option>
+      <option value="1">02. Downstream Contract & Rủi ro</option>
+      <option value="2">03. Scope 43 Class GTSDB vs Ngoại vi</option>
+      <option value="3">04. Phân quyết: IGNORE - NOT_REL - REL</option>
+      <option value="4">05. Quy chuẩn Hình học & Thuộc tính</option>
+      <option value="5">06. 4 Bài học từ Thực chiến Calibration</option>
+      <option value="6">07. Thư viện Edge Cases & 13 Gold Frozen</option>
+      <option value="7">08. Kế hoạch QA & Quality Gates</option>
+      <option value="8">09. Blind Handoff & Lộ trình v3</option>
       <option value="9">10. Tổng kết & Bài học Đắt giá</option>
     </select>
   </div>
@@ -526,7 +480,7 @@
         <div class="role">Spec Owner</div>
         <div class="name">Phan Hiếu Nghĩa</div>
         <div class="id">2A202602332</div>
-        <div class="files">Chủ trì xây dựng Hợp đồng Kỹ thuật, Guideline v1/v2/v3, triệt tiêu luật ẩn</div>
+        <div class="files">Chủ trì Hợp đồng Kỹ thuật, Guideline v1/v2/v3, triệt tiêu luật ẩn</div>
       </div>
       <div class="team-card">
         <div class="role">CVAT Owner</div>
@@ -538,7 +492,7 @@
         <div class="role">Gold Owner</div>
         <div class="name">Nguyễn Thái Dương</div>
         <div class="id">2A202602190</div>
-        <div class="files">Xây dựng thư viện Edge Cases, chốt 13 Gold Decisions và đóng băng tag gold-freeze</div>
+        <div class="files">Xây dựng thư viện Edge Cases, chốt 13 Gold Decisions và đóng băng gold-freeze</div>
       </div>
       <div class="team-card">
         <div class="role">QA Owner</div>
@@ -548,8 +502,8 @@
       </div>
     </div>
 
-    <div class="callout" style="margin-top: 24px;">
-      <strong>Mục tiêu cốt lõi:</strong> Chuyển hóa bài toán Object Detection truyền thống thành <em>Operational Safety Decision</em>: Không chỉ tìm thấy biển báo, mà phải xác định biển báo có ràng buộc hành vi lái xe của Ego hay không.
+    <div class="callout">
+      <strong>Mục tiêu cốt lõi:</strong> Chuyển hóa bài toán Object Detection truyền thống thành <em>Operational Safety Decision</em>: Không chỉ phát hiện biển báo, mà phải xác định biển báo có ràng buộc hành vi lái xe của Ego hay không.
     </div>
   </section>
 
@@ -560,18 +514,18 @@
     
     <div class="grid-2">
       <div>
-        <p><strong>Khách hàng downstream:</strong> Hệ thống tự hành L2+/L3 (Mô-đun ADAS Motion Planning & Speed Advisory). Xe mục tiêu là <strong>xe con chở khách tiêu chuẩn</strong>.</p>
+        <p><strong>Khách hàng downstream:</strong> Hệ thống tự hành L2+/L3 (Mô-đun Motion Planning & Speed Advisory). Xe mục tiêu là <strong>xe con chở khách tiêu chuẩn</strong>.</p>
         
-        <div class="card stop-top" style="margin-bottom: 16px;">
+        <div class="card stop-top" style="margin-bottom: 12px;">
           <h3><span style="color:var(--stop);">Critical Failure 1: False Negative</span> <span class="badge badge-stop">Nguy kịch</span></h3>
           <p><strong>Hiện tượng:</strong> Bỏ sót hoặc gán <code>not_relevant</code> cho biển có hiệu lực trực tiếp (STOP <code>14</code>, Cấm đi vào <code>17</code>, Nhường đường <code>13</code>, Giới hạn tốc độ thấp <code>20/30</code>).</p>
-          <p style="margin-top: 6px; color:#ff8077;"><strong>Hậu quả:</strong> Xe không giảm tốc, không dừng ngã tư, lao vào đường cấm hoặc gây va chạm trực diện.</p>
+          <p style="color:#ff857a;"><strong>Hậu quả:</strong> Xe không giảm tốc, không dừng ngã tư, lao vào đường cấm hoặc gây va chạm trực diện.</p>
         </div>
 
-        <div class="card warn-top" style="border-top: 4px solid var(--warn);">
+        <div class="card warn-top">
           <h3><span style="color:var(--warn);">Critical Failure 2: False Positive</span> <span class="badge badge-warn">Phantom Braking</span></h3>
           <p><strong>Hiện tượng:</strong> Gán nhầm <code>relevant</code> cho biển cấm xe tải (<code>10 no overtaking (trucks)</code>, <code>16 no trucks</code>) hoặc biển cắm riêng cho nhánh gom tách biệt.</p>
-          <p style="margin-top: 6px; color:#ffd074;"><strong>Hậu quả:</strong> Xe con phanh gấp bất ngờ trên cao tốc hoặc từ chối vượt xe an toàn, gây cản trở và bị đâm từ phía sau.</p>
+          <p style="color:#ffc966;"><strong>Hậu quả:</strong> Xe con phanh gấp bất ngờ trên cao tốc hoặc từ chối vượt xe an toàn, gây cản trở và bị đâm từ phía sau.</p>
         </div>
       </div>
 
@@ -579,15 +533,15 @@
         <div class="card info-top">
           <h3>Bản hợp đồng dữ liệu chuẩn hóa</h3>
           <ul>
-            <li><strong>Geometry:</strong> Tight Bounding Box bám khít mép hiển thị ($\le 3$ px).</li>
+            <li><strong>Geometry:</strong> Tight Bounding Box bám khít mép hiển thị (&le; 3 px).</li>
             <li><strong>Taxonomy:</strong> 4 họ biển (<code>prohibitory</code>, <code>mandatory</code>, <code>danger</code>, <code>other</code>) và 43 class GTSDB.</li>
             <li><strong>Hiệu lực (Ego-relevance):</strong> <code>relevant</code>, <code>not_relevant</code>, <code>unknown</code>.</li>
             <li><strong>Trạng thái & Escalation:</strong> <code>readable</code> (yes/no/uncertain), <code>truncated</code>, <code>needs_review</code>, tag ảnh <code>image_escalate</code>.</li>
           </ul>
         </div>
 
-        <div class="callout info" style="margin-top: 16px;">
-          <strong>Escalation Path:</strong> Khi chất lượng ảnh quá mờ nhòe (&ge; 50% che khuất) hoặc giao lộ không đủ bằng chứng hình ảnh để phân định làn $\rightarrow$ Gán <code>relevance = unknown</code> + Bật <code>needs_review = true</code> để chuyển Lead xử lý, tuyệt đối không đoán mò!
+        <div class="callout info">
+          <strong>Escalation Path:</strong> Khi chất lượng ảnh quá mờ nhòe (&ge; 50% che khuất) hoặc giao lộ không đủ bằng chứng hình ảnh để phân định làn &rarr; Gán <code>relevance = unknown</code> + Bật <code>needs_review = true</code> để chuyển Lead xử lý, tuyệt đối không đoán mò!
         </div>
       </div>
     </div>
@@ -604,7 +558,7 @@
         <h3><span style="color:var(--safe);">Trong Scope (BẮT BUỘC LABEL)</span> <span class="badge badge-safe">Label</span></h3>
         <ul>
           <li>Mọi biển báo thuộc <strong>43 class chuẩn GTSDB</strong> (mã <code>00</code> đến <code>42</code>).</li>
-          <li>Kích thước hiển thị $\ge 10\times 10$ pixels.</li>
+          <li>Kích thước hiển thị &ge; 10 &times; 10 pixels.</li>
           <li>Mặt trước hướng về phía xe ego (nhìn thấy được biểu tượng/mặt biển).</li>
           <li>Vị trí: Cắm bên phải, bên trái, trên dải phân cách giữa, đảo giao thông hoặc giá long môn.</li>
         </ul>
@@ -618,12 +572,12 @@
           <li><strong>Biển một chiều:</strong> Biển chữ nhật xanh mũi tên trắng (<code>Einbahnstraße</code>).</li>
           <li><strong>Biển phụ (Zusatzzeichen):</strong> Biển phụ nhỏ gắn bên dưới biển chính (chỉ dùng làm ngữ cảnh đọc biển chính, không vẽ box riêng).</li>
           <li>Biển quay mặt lưng (chỉ thấy khung kim loại).</li>
-          <li>Ảnh không có biển (Negative samples như <code>GTS07</code>, <code>GTS24</code>) $\rightarrow$ 0 box!</li>
+          <li>Ảnh không có biển (Negative samples như <code>GTS07</code>, <code>GTS24</code>) &rarr; 0 box!</li>
         </ul>
       </div>
     </div>
 
-    <div class="callout danger" style="margin-top: 18px;">
+    <div class="callout danger">
       <strong>Cảnh báo phân loại nhóm <code>other</code>:</strong> Nhóm <code>other</code> trong GTSDB <em>CHỈ</em> bao gồm biển ưu tiên (hình thoi vàng <code>12</code>, tam giác ngược <code>13</code>, STOP bát giác <code>14</code>, tam giác <code>11</code>) và biển hết hạn chế (tròn trắng gạch xám <code>06, 32, 41, 42</code>). <strong>Tuyệt đối không gán biển chỉ dẫn vuông/chữ nhật vào nhóm này!</strong>
     </div>
   </section>
@@ -633,35 +587,35 @@
     <p class="kicker">Cơ Chế Phân Quyết</p>
     <h2>Bộ Ba Khác Biệt: IGNORE vs NOT_RELEVANT vs RELEVANT</h2>
 
-    <div class="grid-3" style="margin-top: 14px;">
-      <div class="compare-box ignore">
-        <h3 style="color:var(--stop); margin:0 0 10px;">1. IGNORE</h3>
-        <p><strong>Hành động:</strong> KHÔNG vẽ bounding box (0 box).</p>
+    <div class="grid-3" style="margin-top: 10px;">
+      <div class="card stop-top">
+        <h3 style="color:var(--stop);">1. IGNORE <span class="badge badge-stop">0 Box</span></h3>
+        <p><strong>Hành động:</strong> KHÔNG vẽ bounding box.</p>
         <p><strong>Đối tượng áp dụng:</strong></p>
-        <ul style="padding-left:18px; margin: 8px 0;">
+        <ul>
           <li>Nằm ngoài danh mục 43 class GTSDB.</li>
           <li>Biển tên thành phố, biển P, biển một chiều, biển phụ dưới chân.</li>
           <li>Mặt sau của biển quay lưng lại.</li>
-          <li>Biển quá nhỏ &lt; 10x10 px hoặc che khuất 100%.</li>
+          <li>Biển quá nhỏ &lt; 10 &times; 10 px hoặc che khuất 100%.</li>
         </ul>
       </div>
 
-      <div class="compare-box not-rel">
-        <h3 style="color:var(--warn); margin:0 0 10px;">2. NOT_RELEVANT</h3>
-        <p><strong>Hành động:</strong> VẪN VẼ BOX nhưng gán <code>relevance: not_relevant</code>.</p>
+      <div class="card warn-top">
+        <h3 style="color:var(--warn);">2. NOT_RELEVANT <span class="badge badge-warn">Vẽ Box</span></h3>
+        <p><strong>Hành động:</strong> Vẽ box nhưng gán <code>relevance: not_relevant</code>.</p>
         <p><strong>Đối tượng áp dụng:</strong></p>
-        <ul style="padding-left:18px; margin: 8px 0;">
-          <li>Thuộc 43 class nhưng dành cho phương tiện khác (xe tải: <code>10 cấm xe tải vượt</code>, <code>16 cấm xe tải</code>).</li>
+        <ul>
+          <li>Thuộc 43 class nhưng dành cho xe tải (<code>10 cấm xe tải vượt</code>, <code>16 cấm xe tải</code>).</li>
           <li>Biển cắm ở nhánh gom, đường rẽ phụ mà ego không đi vào.</li>
           <li>Biển ở góc xa thuộc luồng cắt ngang ngã tư.</li>
         </ul>
       </div>
 
-      <div class="compare-box rel">
-        <h3 style="color:var(--safe); margin:0 0 10px;">3. RELEVANT</h3>
-        <p><strong>Hành động:</strong> VẼ BOX và gán <code>relevance: relevant</code>.</p>
+      <div class="card safe-top">
+        <h3 style="color:var(--safe);">3. RELEVANT <span class="badge badge-safe">Bắt buộc</span></h3>
+        <p><strong>Hành động:</strong> Vẽ box và gán <code>relevance: relevant</code>.</p>
         <p><strong>Đối tượng áp dụng:</strong></p>
-        <ul style="padding-left:18px; margin: 8px 0;">
+        <ul>
           <li>Khống chế trực tiếp làn ego đang di chuyển.</li>
           <li>Cắm trên dải phân cách/đảo giao thông phía trước (<code>38 keep right</code>).</li>
           <li>Cặp biển đối xứng cắm cả hai bên đường (cao tốc/đường một chiều).</li>
@@ -670,7 +624,7 @@
       </div>
     </div>
 
-    <div class="callout info" style="margin-top: 20px;">
+    <div class="callout info">
       <strong>Nguyên tắc vàng ghi nhớ:</strong> <em>"IGNORE loại trừ từ hình học (không box), NOT_RELEVANT chấp nhận hình học nhưng từ chối hiệu lực với xe con Ego."</em>
     </div>
   </section>
@@ -682,8 +636,8 @@
 
     <div class="grid-2">
       <div>
-        <div class="card lane-top" style="margin-bottom: 16px;">
-          <h3>Dung sai hình học $\le 3$ Pixels</h3>
+        <div class="card lane-top" style="margin-bottom: 12px;">
+          <h3>Dung sai hình học &le; 3 Pixels</h3>
           <ul>
             <li><strong>Tight Boundary:</strong> Box phải ôm khít viền ngoài cùng của mặt biển hiển thị.</li>
             <li><strong>Không phụ kiện:</strong> Tuyệt đối không kéo box trùm qua chân cột đỡ, thanh giằng kim loại, giá treo hoặc khoảng trống nền trời.</li>
@@ -715,9 +669,9 @@
               <tr><td><code>needs_review</code></td><td>Checkbox (<code>true</code> / <code>false</code>)</td><td>Ca biên cần rà soát</td></tr>
             </tbody>
           </table>
-          <div class="callout danger" style="margin: 8px 0 0; font-size: 14px;">
+          <p style="margin: 8px 0 0; font-size: 13px; color:#ff857a;">
             <strong>Cấm đoán mò số:</strong> Khi <code>readable = no</code>, bắt buộc chọn <code>sign_class = unknown</code>. Tuyệt đối không phỏng đoán số tốc độ 30 hay 50!
-          </div>
+          </p>
         </div>
       </div>
     </div>
@@ -732,7 +686,7 @@
     <table>
       <thead>
         <tr>
-          <th>Mẫu</th>
+          <th style="width:70px;">Mẫu</th>
           <th>Bất đồng phát hiện</th>
           <th>Nguyên nhân gốc rễ</th>
           <th>Phán quyết chuẩn hoá (Guideline)</th>
@@ -741,15 +695,15 @@
       <tbody>
         <tr>
           <td><code>GTS04</code></td>
-          <td>Annotator gán <code>relevant</code> cho biển cấm xe tải <code>10 no overtaking (trucks)</code></td>
-          <td>Nhìn thấy biển cắm bên phải đường là tự động nghĩ xe nào cũng phải tuân thủ</td>
+          <td>Gán <code>relevant</code> cho biển cấm xe tải <code>10 no overtaking (trucks)</code></td>
+          <td>Thấy biển cắm bên phải đường là nghĩ xe nào cũng phải tuân thủ</td>
           <td><span class="badge badge-warn">not_relevant</span> Xe ego là xe con standard, không chịu hiệu lực của biển cấm dành riêng cho xe tải.</td>
         </tr>
         <tr>
           <td><code>GTS10</code></td>
           <td>2 biển cùng loại <code>33 go right</code>: 1 biển ở ngã rẽ và 1 biển ở góc xa</td>
           <td>Mặc định gán cùng relevance vì cùng chung class</td>
-          <td><span class="badge badge-safe">Vị trí tương quan</span> Biển đón đầu lối rẽ: <code>relevant</code>; biển ở góc xa đối diện: <code>not_relevant</code>. Relevance phụ thuộc vị trí làn, không theo mã biển!</td>
+          <td><span class="badge badge-safe">Vị trí tương quan</span> Biển đón đầu lối rẽ: <code>relevant</code>; biển ở góc xa: <code>not_relevant</code>. Relevance phụ thuộc vị trí làn, không theo mã biển!</td>
         </tr>
         <tr>
           <td><code>GTS03</code></td>
@@ -770,36 +724,32 @@
   <!-- SLIDE 7: Edge Cases Library & Gold Freeze -->
   <section class="slide">
     <p class="kicker">Thư Viện Ca Biên (Gate G4)</p>
-    <h2>13 Quyết Định Gold Đã Đóng Băng & 8 Edge-Case Cards</h2>
+    <h2>13 Quyết Định Gold Đóng Băng & 8 Edge-Case Cards</h2>
     <p class="lead">Bao phủ 100% 7 chiều đa dạng theo yêu cầu kỹ thuật nghiêm ngặt:</p>
 
-    <div class="grid-4" style="margin-top: 14px;">
+    <div class="grid-4">
       <div class="card stop-top">
         <h3>EC-07 · GTS22 <span class="badge badge-stop">Critical</span></h3>
-        <p><strong>Cặp biển STOP hai bên ngã tư:</strong></p>
-        <p>Vẽ 2 box riêng cho 2 biển <code>14 stop</code> ở cả 2 bên đường. Cả 2 đều là <code>relevant</code> để chống lọt biển báo sống còn.</p>
+        <p><strong>Cặp biển STOP hai bên:</strong> Vẽ 2 box riêng cho 2 biển <code>14 stop</code> ở cả 2 bên ngã tư. Cả 2 đều là <code>relevant</code> để chống lọt biển báo sống còn.</p>
       </div>
 
       <div class="card safe-top">
         <h3>EC-04 · GTS07 <span class="badge badge-safe">Negative</span></h3>
-        <p><strong>Khung cảnh trống trải không biển:</strong></p>
-        <p>0 bounding box. Đo lường khả năng chống False Positive, không vẽ nhầm bóng cây/vật tròn thành biển.</p>
+        <p><strong>Khung cảnh trống trải:</strong> 0 bounding box. Đo lường khả năng chống False Positive, không vẽ nhầm bóng cây/vật tròn thành biển.</p>
       </div>
 
       <div class="card lane-top">
         <h3>EC-03 · GTS09 <span class="badge badge-lane">Edge</span></h3>
-        <p><strong>Biển trên đảo giao thông:</strong></p>
-        <p>Biển <code>38 keep right</code> cắm trên mũi đảo bên trái nhưng khống chế hướng đi của ego &rarr; <code>relevant</code>.</p>
+        <p><strong>Biển trên đảo giao thông:</strong> Biển <code>38 keep right</code> cắm trên mũi đảo bên trái nhưng khống chế hướng đi của ego &rarr; <code>relevant</code>.</p>
       </div>
 
       <div class="card info-top">
         <h3>EC-05 · GTS06 <span class="badge badge-info">Small Far</span></h3>
-        <p><strong>Biển tốc độ quá xa mờ số:</strong></p>
-        <p>Vẽ box, gán họ <code>prohibitory</code>, nhưng đặt <code>sign_class = unknown</code>, <code>readable = no</code>. Tuyệt đối không đoán mò số.</p>
+        <p><strong>Biển tốc độ quá xa mờ số:</strong> Vẽ box, gán họ <code>prohibitory</code>, nhưng đặt <code>sign_class = unknown</code>, <code>readable = no</code>. Tuyệt đối không đoán mò số.</p>
       </div>
     </div>
 
-    <div class="callout success" style="margin-top: 18px;">
+    <div class="callout success">
       <strong>Trạng thái đóng băng (Freeze Verification):</strong> Đã hoàn thành 13/13 Gold Decisions, tạo tệp <code>FREEZE.txt</code> với đầy đủ mã SHA256 và gắn tag git <code>gold-freeze</code> trên GitHub repository.
     </div>
   </section>
@@ -810,39 +760,35 @@
     <h2>Hệ Thống Quality Gates & Quy Chuẩn Lọc Lỗi Đa Tầng</h2>
 
     <div class="grid-2">
-      <div>
-        <div class="card lane-top">
-          <h3>Phân Cấp Mức Độ Nghiêm Trọng Của Lỗi (Defect Severity)</h3>
-          <ul>
-            <li><strong style="color:var(--stop);">Critical:</strong> Đổi quyết định sống còn của xe (Bỏ sót biển STOP/Cấm vào; hoặc gán relevant cho biển xe tải gây phanh gấp) &rarr; <strong>Rework ngay lập tức, chặn release batch!</strong></li>
-            <li><strong style="color:var(--warn);">Major:</strong> Sai mã biển, nhầm họ biển hoặc box lệch &gt; 5 px &rarr; Rework trong vòng 24 giờ.</li>
-            <li><strong style="color:var(--paint-dim);">Minor:</strong> Lệch viền 2–3 px, nhầm <code>readable</code> nhẹ &rarr; Chấp nhận hoặc sửa nhanh.</li>
-            <li><strong style="color:var(--info);">Question:</strong> Tình huống bất thường chưa có tiền lệ &rarr; Bật <code>needs_review</code> chuyển Spec Owner xử lý.</li>
-          </ul>
-        </div>
+      <div class="card lane-top">
+        <h3>Phân Cấp Mức Độ Nghiêm Trọng Của Lỗi (Defect Severity)</h3>
+        <ul>
+          <li><strong style="color:var(--stop);">Critical:</strong> Đổi quyết định sống còn của xe (Bỏ sót biển STOP/Cấm vào; hoặc gán relevant cho biển xe tải gây phanh gấp) &rarr; <strong>Rework ngay lập tức, chặn release batch!</strong></li>
+          <li><strong style="color:var(--warn);">Major:</strong> Sai mã biển, nhầm họ biển hoặc box lệch &gt; 5 px &rarr; Rework trong vòng 24 giờ.</li>
+          <li><strong style="color:var(--paint-dim);">Minor:</strong> Lệch viền 2–3 px, nhầm <code>readable</code> nhẹ &rarr; Chấp nhận hoặc sửa nhanh.</li>
+          <li><strong style="color:var(--info);">Question:</strong> Tình huống bất thường chưa có tiền lệ &rarr; Bật <code>needs_review</code> chuyển Spec Owner xử lý.</li>
+        </ul>
       </div>
 
-      <div>
-        <div class="card safe-top">
-          <h3>Tiêu Chuẩn Nghiệm Thu Quality Gate (Batch PASS Criteria)</h3>
-          <div class="metric-box" style="margin-bottom: 12px;">
-            <div class="val" style="color:var(--stop);">100%</div>
-            <div class="label">Critical Decision Correctness (Zero Defect Escape)</div>
-          </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div class="metric-box">
-              <div class="val">$\ge 85\%$</div>
-              <div class="label">Decision Accuracy</div>
-            </div>
-            <div class="metric-box">
-              <div class="val">$\ge 90\%$</div>
-              <div class="label">Geometry Compliance</div>
-            </div>
-          </div>
-          <p style="margin-top: 12px; font-size: 14px; text-align: center; color: var(--paint-dim);">
-            Số lượng thuộc tính <code>__undefined__</code> còn lại = <strong>0</strong>.
-          </p>
+      <div class="card safe-top">
+        <h3>Tiêu Chuẩn Nghiệm Thu Quality Gate (Batch PASS Criteria)</h3>
+        <div class="metric-box" style="margin-bottom: 10px;">
+          <div class="val" style="color:var(--stop);">100%</div>
+          <div class="label">Critical Decision Correctness (Zero Defect Escape)</div>
         </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="metric-box">
+            <div class="val">&ge; 85%</div>
+            <div class="label">Decision Accuracy</div>
+          </div>
+          <div class="metric-box">
+            <div class="val">&ge; 90%</div>
+            <div class="label">Geometry Compliance</div>
+          </div>
+        </div>
+        <p style="margin-top: 10px; font-size: 13px; text-align: center; color: var(--paint-dim);">
+          Số lượng thuộc tính <code>__undefined__</code> còn lại = <strong>0</strong>.
+        </p>
       </div>
     </div>
   </section>
@@ -853,27 +799,23 @@
     <h2>Quy Trình Blind Handoff & Lộ Trình Nâng Cấp Guideline v3</h2>
 
     <div class="grid-2">
-      <div>
-        <div class="card info-top">
-          <h3>Cơ Chế Bàn Giao Thử Mù (Blind Test)</h3>
-          <ul>
-            <li>Gói xuất <code>blind-pack.zip</code> chỉ chứa: Guideline, Ontology setup, ảnh thi (test split).</li>
-            <li><strong>Giấu kín 100%:</strong> Không gửi file đáp án Gold, không gửi thẻ Edge Cases.</li>
-            <li>Mọi câu hỏi thắc mắc của Nhóm 2 được ghi vào <code>clarification_log.csv</code> &rarr; Thước đo tính độc lập và tự thân của Guideline!</li>
-            <li>Chấm điểm đối ứng bằng CLI tự động: <code>python lab9.py score &lt;peer.zip&gt;</code> và <code>python lab9.py gts</code>.</li>
-          </ul>
-        </div>
+      <div class="card info-top">
+        <h3>Cơ Chế Bàn Giao Thử Mù (Blind Test)</h3>
+        <ul>
+          <li>Gói xuất <code>blind-pack.zip</code> chỉ chứa: Guideline, Ontology setup, ảnh thi (test split).</li>
+          <li><strong>Giấu kín 100%:</strong> Không gửi file đáp án Gold, không gửi thẻ Edge Cases.</li>
+          <li>Mọi câu hỏi thắc mắc của Nhóm 2 được ghi vào <code>clarification_log.csv</code> &rarr; Thước đo tính độc lập và tự thân của Guideline!</li>
+          <li>Chấm điểm đối ứng bằng CLI tự động: <code>python lab9.py score &lt;peer.zip&gt;</code> và <code>python lab9.py gts</code>.</li>
+        </ul>
       </div>
 
-      <div>
-        <div class="card lane-top">
-          <h3>Hạng Mục Nâng Cấp Lên Guideline v3</h3>
-          <ul>
-            <li><strong>Khóa chặt nhóm IGNORE:</strong> Định danh rõ biển tên thành phố/khoảng cách, biển P, biển một chiều nằm ngoài 43 class GTSDB.</li>
-            <li><strong>Làm sạch nhóm OTHER:</strong> Xóa bỏ hoàn toàn định nghĩa "biển chỉ dẫn vuông/chữ nhật" khỏi nhóm Other trong guideline cũ.</li>
-            <li><strong>Nguyên lý vị trí không gian:</strong> Đưa ví dụ phân xử <code>GTS10</code> vào hướng dẫn chính: <em>Relevance quyết định bởi vị trí so với làn của ego, không suy diễn theo mã loại biển!</em></li>
-          </ul>
-        </div>
+      <div class="card lane-top">
+        <h3>Hạng Mục Nâng Cấp Lên Guideline v3</h3>
+        <ul>
+          <li><strong>Khóa chặt nhóm IGNORE:</strong> Định danh rõ biển tên thành phố/khoảng cách, biển P, biển một chiều nằm ngoài 43 class GTSDB.</li>
+          <li><strong>Làm sạch nhóm OTHER:</strong> Xóa bỏ hoàn toàn định nghĩa "biển chỉ dẫn vuông/chữ nhật" khỏi nhóm Other trong guideline cũ.</li>
+          <li><strong>Nguyên lý vị trí không gian:</strong> Đưa ví dụ phân xử <code>GTS10</code> vào hướng dẫn chính: <em>Relevance quyết định bởi vị trí so với làn của ego, không suy diễn theo mã loại biển!</em></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -883,7 +825,7 @@
     <p class="kicker">Tổng Kết & Bài Học Đắt Giá</p>
     <h2>Guideline Rõ Ràng Là Nền Tảng Của Dữ Liệu Sạch</h2>
     
-    <div class="grid-3" style="margin-top: 20px;">
+    <div class="grid-3" style="margin-top: 14px;">
       <div class="card lane-top">
         <h3>1. Downstream là kim chỉ nam</h3>
         <p>Gán nhãn không phải là bài tập hình họa. Mọi nhãn vẽ ra đều là đầu vào điều khiển một chiếc xe 2 tấn di chuyển trên đường thực tế.</p>
@@ -900,9 +842,9 @@
       </div>
     </div>
 
-    <div style="text-align: center; margin-top: 36px;">
-      <h3 style="font-family: Literata, Georgia, serif; font-size: 28px; margin-bottom: 8px;">Xin chân thành cảm ơn Thầy Cô và các Bạn!</h3>
-      <p class="dim" style="margin: 0 auto;">Nhóm 1 sẵn sàng đón nhận câu hỏi phản biện từ Nhóm 2 và Hội đồng.</p>
+    <div style="text-align: center; margin-top: 24px;">
+      <h3 style="font-family: Literata, Georgia, serif; font-size: 24px; margin-bottom: 6px;">Xin chân thành cảm ơn Thầy Cô và các Bạn!</h3>
+      <p class="dim" style="margin: 0 auto; font-size: 15px;">Nhóm 1 sẵn sàng đón nhận câu hỏi phản biện từ Nhóm 2 và Hội đồng.</p>
     </div>
   </section>
 
