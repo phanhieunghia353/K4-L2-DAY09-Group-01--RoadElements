@@ -1,1 +1,16 @@
 sample_id,split,tags,reason
+GTS05,example,normal,Biển giới hạn tốc độ 30 km/h đơn lẻ bên phải đường rõ ràng minh họa trường hợp relevant cơ bản
+GTS01,example,edge;conflict,Cặp biển cắm hai bên đường với 3 biển trên cùng một cột minh họa quy tắc phân tách box và gán relevance
+GTS07,example,negative,Ảnh âm tính không có biển báo nào làm mẫu cho annotator không vẽ box khống
+GTS09,example,normal;edge,Biển keep right cắm trên đảo giao thông phía trước làn xe chạy minh họa quy tắc cắm đảo
+GTS03,calibration,edge;conflict,Tập hợp 4 biển báo gồm người đi bộ qua đường tốc độ 20 đường ưu tiên và keep right
+GTS04,calibration,edge,Cặp biển tốc độ 120 và cấm vượt cho xe tải hai bên cao tốc thử thách phân loại relevance xe con
+GTS06,calibration,small_far,Biển tốc độ 30 ở khoảng cách xa thử nghiệm ngưỡng nhận biết readable và kích thước tối thiểu
+GTS10,calibration,normal;edge,Hai biển rẽ phải bắt buộc (go right) ở ngã rẽ nhánh phụ thử nghiệm nhận biết hướng áp dụng
+GTS11,calibration,normal,Biển keep right trên đảo giao thông khu đô thị
+GTS24,calibration,negative,Ảnh âm tính không có biển báo dùng để kiểm tra tỷ lệ False Positive trong calibration
+GTS22,blind,critical;edge,Hai biển STOP cắm hai bên ngã tư kèm một biển keep right đánh giá critical decision về an toàn
+GTS18,blind,critical;edge,Hai biển cấm đi vào (no entry) hai bên đường đánh giá critical decision tránh đi vào đường cấm
+GTS14,blind,normal,Biển đường ưu tiên và tốc độ 50 trên cùng cột bên phải đường rõ ràng
+GTS21,blind,edge;ambiguity,Biển cảnh báo tuyết lớn ở gần và biển giao cắt ưu tiên nhỏ mờ ở xa thử nghiệm ambiguity
+GTS26,blind,normal;edge,Biển đường cong nguy hiểm kết hợp biển tốc độ 50 trên cùng cột
