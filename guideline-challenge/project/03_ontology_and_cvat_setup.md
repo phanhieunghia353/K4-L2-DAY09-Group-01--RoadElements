@@ -11,7 +11,7 @@ Bảng ontology là **source of truth** cho schema CVAT: `03_cvat_labels.json` p
 | `sign_family` | — | attribute | `__undefined__`, `prohibitory`, `mandatory`, `danger`, `other`, `unknown` | `__undefined__` | false | Phân nhóm biển ở cấp cao theo hình dáng/màu sắc (cấm, hiệu lệnh, nguy hiểm, khác, không rõ), giúp mô hình downstream nhận diện nhóm chức năng ngay cả khi ký hiệu chi tiết mờ. |
 | `sign_class` | — | attribute | `__undefined__`, 43 class GTSDB, `unknown` | `__undefined__` | false | Mã biển chi tiết chuẩn GTSDB (00 đến 42 hoặc unknown khi bị che/xa không đọc được số hoặc icon). |
 | `readable` | — | attribute | `uncertain`, `yes`, `no` | `uncertain` | false | Đánh giá chất lượng thị giác của biển: có đọc được nội dung/số/icon bằng mắt người ở kích thước gốc hay không. Mặc định `uncertain`. |
-| `truncated` | — | attribute | `false` (checkbox) | `false` | false | Đánh dấu biển bị cắt cụt bởi mép ảnh (>= 10% diện tích biển nằm ngoài khung hình). |
+| `truncated` | — | attribute | `false` (checkbox) | `false` | false | Đánh dấu biển bị mép ảnh cắt mất một phần nhưng vẫn nhận ra họ biển (guideline mục 4.4 và 6.3); box vẽ bám mép ảnh. |
 | `needs_review` | — | attribute | `false` (checkbox) | `false` | false | Đánh dấu ca biên mơ hồ cần thảo luận hoặc QA kiểm tra lại trước khi phê duyệt. |
 | `image_escalate` | tag | class (tag) | — | — | false | Nhãn cấp ảnh khi bối cảnh giao thông có xung đột biển báo bất thường không thể phân xử hoặc vi phạm điều kiện an toàn downstream. |
 
