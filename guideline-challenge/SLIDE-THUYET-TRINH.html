@@ -840,26 +840,27 @@
 
   <!-- SLIDE 9: Blind Handoff & Revision Plan -->
   <section class="slide">
-    <p class="kicker">Chuyển Giao & Cải Tiến Liên Tục (Gates G6 - G8)</p>
-    <h2>Quy Trình Blind Handoff & Lộ Trình Nâng Cấp Guideline v3</h2>
+    <p class="kicker">Chuyển Giao & Cải Tiến Thực Chiến (Gates G5 - G6)</p>
+    <h2>Kết Quả Thử Mù Mixigaming & Bước Nhảy Vọt Guideline v3</h2>
 
     <div class="grid-2">
       <div class="card info-top">
-        <h3>Cơ Chế Bàn Giao Thử Mù (Blind Test)</h3>
+        <h3>Thực Chiến Blind Test (Đối tác: Nhóm Mixigaming)</h3>
         <ul>
-          <li>Gói xuất <code>blind-pack.zip</code> chỉ chứa: Guideline, Ontology setup, ảnh thi (test split).</li>
-          <li><strong>Giấu kín 100%:</strong> Không gửi file đáp án Gold, không gửi thẻ Edge Cases.</li>
-          <li>Mọi câu hỏi thắc mắc của Nhóm 2 được ghi vào <code>clarification_log.csv</code> &rarr; Thước đo tính độc lập và tự thân của Guideline!</li>
-          <li>Chấm điểm đối ứng bằng CLI tự động: <code>python lab9.py score &lt;peer.zip&gt;</code> và <code>python lab9.py gts</code>.</li>
+          <li><strong>Người gán nhãn thử nghiệm:</strong> Bạn Cẩm Vũ Ngọc Thạch (Nhóm Mixigaming).</li>
+          <li><strong>Tính tự thân hoàn hảo:</strong> Chỉ số độc lập <strong>I = 100/100</strong> (0 câu hỏi phát sinh trong suốt 15 phút thử mù).</li>
+          <li><strong>Điểm mạnh:</strong> Mục 4.1 và các ví dụ mã biển giúp peer gán nhãn <code>relevant</code> cực nhanh và chuẩn xác cho mọi biển thực tế.</li>
+          <li><strong>Bất đồng phát hiện:</strong> Cụm biển chỉ hướng nhiều panel (<code>GTS21</code>) gây lúng túng; và default <code>uncertain</code> của <code>readable</code> trong CVAT dễ bị bỏ quên.</li>
         </ul>
       </div>
 
       <div class="card lane-top">
-        <h3>Hạng Mục Nâng Cấp Lên Guideline v3</h3>
+        <h3>Các Cải Tiến Đã Đưa Vào Guideline v3 Chính Thức</h3>
         <ul>
-          <li><strong>Khóa chặt nhóm IGNORE:</strong> Định danh rõ biển tên thành phố/khoảng cách, biển P, biển một chiều nằm ngoài 43 class GTSDB.</li>
-          <li><strong>Làm sạch nhóm OTHER:</strong> Xóa bỏ hoàn toàn định nghĩa "biển chỉ dẫn vuông/chữ nhật" khỏi nhóm Other trong guideline cũ.</li>
-          <li><strong>Nguyên lý vị trí không gian:</strong> Đưa ví dụ phân xử <code>GTS10</code> vào hướng dẫn chính: <em>Relevance quyết định bởi vị trí so với làn của ego, không suy diễn theo mã loại biển!</em></li>
+          <li><strong>Khóa chặt Scope:</strong> Biển chỉ hướng, địa danh, route number (bất kể màu nền, kể cả cụm nhiều panel như <code>GTS21</code>) đều là <code>IGNORE (0 box)</code>.</li>
+          <li><strong>Chống nhầm họ biển:</strong> Nhấn mạnh <code>13 give way</code> và <code>11 priority</code> thuộc họ <code>other</code>, tuyệt đối không suy thành <code>danger</code> theo hình tam giác.</li>
+          <li><strong>Chủ động chọn <code>readable</code>:</strong> Annotator bắt buộc chủ động đánh giá độ rõ, không ỷ lại giá trị mặc định của CVAT.</li>
+          <li><strong>Kỷ luật đóng băng Gold:</strong> Chấp nhận điểm GTS theo đúng quy chế freeze; dũng cảm thừa nhận và ghi chú 11 dòng <code>gold sai:</code> để cải tiến quy trình.</li>
         </ul>
       </div>
     </div>
