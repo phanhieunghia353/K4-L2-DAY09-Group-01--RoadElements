@@ -3,8 +3,8 @@
 Điền trước phút 15. Thay mọi placeholder; còn sót thì `make status` báo ở gate G1.
 
 - **Team:** group 1
-- **Nhóm peer test bài của mình:** group 2
-- **Nhóm mình test bài của:** group 2
+- **Nhóm peer test bài của mình:** Mixigaming
+- **Nhóm mình test bài của:** Mixigaming
 - **Problem family:** Traffic sign relevance and taxonomy (Biển báo nào xe tự hành cần quan tâm và tuân thủ trên GTSDB)
 - **Nguồn ảnh:** gtsdb
 

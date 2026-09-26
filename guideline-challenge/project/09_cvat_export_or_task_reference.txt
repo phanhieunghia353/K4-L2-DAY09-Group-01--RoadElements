@@ -3,6 +3,6 @@ CVAT task reference — thay mọi placeholder mới là xong.
 CVAT version: CVAT v2.75.1, chạy local qua Docker tại http://localhost:8888 (máy của CVAT Owner Trần Thẩm Anh Toàn)
 Task calibration (tên, id): group1-calib-toan, id 30 (job 28, 6 ảnh GTS03 GTS04 GTS06 GTS10 GTS11 GTS24)
 Task bản cuối theo guideline v3 (tên, id) hoặc lý do không có: TODO
-File export đã nộp (đường dẫn trong repo): project/06_calibration_exports/ (export calibration từng thành viên, TODO chép đủ file .zip) và project/07_blind_handoff/peer_output/ (export blind của group 2, TODO sau khi nhận)
+File export đã nộp (đường dẫn trong repo): project/06_calibration_exports/ (export calibration từng thành viên, TODO chép đủ file .zip) và project/07_blind_handoff/peer_output/ (export blind của nhóm Mixigaming, TODO sau khi nhận)
 Guideline version dán trong Guide của task: TODO
 Ghi chú cho người tiếp nhận: Tạo task bằng cách dán nguyên project/03_cvat_labels.json vào tab Raw (không sửa trong Constructor) và dán project/02_guideline.md vào Guide của task. Ảnh là ảnh tĩnh GTSDB nên dùng Shape, không dùng Track. Label traffic_sign (rectangle) có 3 attribute select mặc định __undefined__ (relevance, sign_family, sign_class): giá trị __undefined__ còn trong export nghĩa là annotator chưa gán. Nhiều biển trên một ảnh thì vẽ hết box trước rồi chuyển sang Attribute annotation mode để gán attribute. Ca không quyết định được: bật checkbox needs_review trên object; xung đột cả ảnh: gắn tag image_escalate. Export dạng CVAT for images 1.1, tắt Save images.
