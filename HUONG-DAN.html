@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 9 — Guideline challenge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,560;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,560;0,7..72,700;1,7..72,560&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --asphalt: #141614;
+    --asphalt-2: #1e221c;
+    --paint: #f4f0e6;
+    --paint-dim: #c4bfb2;
+    --lane: #f0c400;
+    --lane-ink: #1a1600;
+    --stop: #e23b2f;
+    --line: rgba(244, 240, 230, 0.16);
+    --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    background: var(--asphalt);
+    color: var(--paint);
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  .slide::-webkit-scrollbar,
+  pre::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  body {
+    font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
+    font-size: 22px;
+    line-height: 1.35;
+  }
+
+  .edge {
+    position: fixed;
+    z-index: 5;
+    left: 0; top: 0; bottom: 0;
+    width: 18px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--lane) 0 26px,
+      var(--asphalt) 26px 42px
+    );
+  }
+
+  header.bar, footer.bar {
+    position: fixed;
+    z-index: 6;
+    left: 18px; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: rgba(20, 22, 20, 0.92);
+    backdrop-filter: blur(8px);
+  }
+  header.bar { top: 0; border-bottom: 1px solid var(--line); }
+  footer.bar { bottom: 0; border-top: 1px solid var(--line); gap: 16px; }
+  .brand {
+    font-family: Literata, Georgia, serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .brand span { color: var(--lane); }
+  .hint { color: var(--paint-dim); font-size: 14px; }
+  kbd {
+    font-family: inherit;
+    border: 1px solid var(--line);
+    border-bottom-width: 2px;
+    padding: 1px 7px;
+    border-radius: 4px;
+    color: var(--paint);
+  }
+
+  .lane-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(244, 240, 230, 0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .lane-track::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to right,
+      transparent 0 10px,
+      rgba(244, 240, 230, 0.28) 10px 22px
+    );
+  }
+  .lane-fill {
+    position: absolute;
+    left: 0; top: -2px; bottom: -2px;
+    width: 0;
+    background: var(--lane);
+    box-shadow: 0 0 16px var(--lane);
+  }
+  .km {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    min-width: 88px;
+    text-align: right;
+    letter-spacing: 0.04em;
+  }
+  .km b { color: var(--lane); font-weight: 700; }
+
+  .deck { position: fixed; inset: 64px 0 64px 18px; }
+  .slide {
+    display: none;
+    height: 100%;
+    overflow: hidden;
+    scrollbar-width: none;
+    padding: 36px 64px 28px;
+  }
+  .slide.is-on { display: block; animation: rise 0.35s ease; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .kicker {
+    margin: 0 0 10px;
+    color: var(--lane);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: Literata, Georgia, serif;
+    font-weight: 560;
+    font-size: clamp(40px, 5vw, 68px);
+    line-height: 1.08;
+    margin: 0 0 18px;
+    max-width: 18ch;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-family: Literata, Georgia, serif;
+    font-weight: 560;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.12;
+    margin: 0 0 22px;
+    letter-spacing: -0.02em;
+  }
+  p { margin: 0 0 14px; max-width: 62ch; }
+  .lead { font-size: 28px; max-width: 36ch; color: var(--paint); }
+  .dim { color: var(--paint-dim); }
+
+  .plate {
+    display: inline-block;
+    background: var(--lane);
+    color: var(--lane-ink);
+    font-weight: 700;
+    padding: 8px 14px 10px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .stop {
+    border-left: 8px solid var(--stop);
+    padding: 12px 16px;
+    background: rgba(226, 59, 47, 0.12);
+    max-width: 62ch;
+    margin: 16px 0;
+  }
+
+  ul, ol { margin: 0; padding-left: 1.2em; max-width: 68ch; }
+  li { margin: 8px 0; }
+  li strong { color: var(--lane); font-weight: 700; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 28px 48px;
+    align-items: start;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .card {
+    background: var(--asphalt-2);
+    border-top: 4px solid var(--lane);
+    padding: 16px 18px 18px;
+    min-height: 160px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 22px; }
+  .card p { margin: 0; color: var(--paint-dim); font-size: 18px; }
+  .card code { color: var(--paint); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    color: var(--lane);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  tr:last-child td { border-bottom: 0; }
+
+  pre {
+    margin: 12px 0 0;
+    padding: 14px 16px;
+    background: #0c0e0c;
+    border-left: 4px solid var(--lane);
+    overflow: hidden;
+    scrollbar-width: none;
+    font-family: Consolas, "Cascadia Mono", monospace;
+    font-size: 18px;
+    line-height: 1.45;
+    color: var(--paint);
+  }
+  code {
+    font-family: Consolas, "Cascadia Mono", monospace;
+    font-size: 0.92em;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 36px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: none;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 12px;
+    margin: 0;
+    align-items: start;
+  }
+  .n {
+    font-family: Literata, Georgia, serif;
+    font-size: 28px;
+    color: var(--lane);
+    line-height: 1;
+  }
+  .steps b { display: block; font-size: 20px; }
+  .steps span { color: var(--paint-dim); font-size: 16px; }
+
+  .nav-btn {
+    position: fixed;
+    z-index: 7;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 54px;
+    height: 86px;
+    border: 0;
+    background: transparent;
+    color: var(--paint);
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .nav-btn:hover { color: var(--lane); }
+  .nav-btn.prev { left: 22px; }
+  .nav-btn.next { right: 8px; }
+  .nav-btn:focus-visible { outline: 2px solid var(--lane); }
+
+  .pack p { margin-bottom: 6px; }
+  .pack ul { margin: 0 0 6px; }
+  .pack li { margin: 1px 0; }
+  .pack .stop { margin: 6px 0; }
+
+  .cover h1 { max-width: 14ch; font-size: clamp(52px, 6.4vw, 84px); }
+  .cover .sub { font-size: 24px; max-width: 36ch; color: var(--paint-dim); }
+
+  @media (max-height: 820px) {
+    body { font-size: 17px; }
+    .slide { padding: 16px 48px 12px; }
+    h1 { font-size: 40px; }
+    h2 { font-size: 32px; }
+    .card { min-height: 0; }
+    .lead, .cover .sub { font-size: 20px; }
+    pre, table { font-size: 15px; }
+    .steps b { font-size: 17px; }
+  }
+
+  @media (max-width: 900px) {
+    body { font-size: 18px; }
+    .slide { padding: 24px 22px 20px 28px; }
+    .grid, .cards, .steps { grid-template-columns: 1fr; }
+    .nav-btn { display: none; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 30px; }
+  }
+
+  @media print {
+    .edge, header.bar, footer.bar, .nav-btn { display: none; }
+    .deck { position: static; }
+    .slide, .slide.is-on {
+      display: block;
+      height: auto;
+      page-break-after: always;
+      animation: none;
+    }
+    body { background: white; color: black; }
+    .card, pre { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="edge" aria-hidden="true"></div>
+<header class="bar">
+  <div class="brand">Day 9 <span>·</span> Road elements</div>
+  <div class="hint">Guideline challenge · thư mục <code>guideline-challenge</code></div>
+</header>
+
+<main class="deck" id="deck">
+
+  <section class="slide cover is-on">
+    <p class="kicker">Buổi lab · làm theo nhóm</p>
+    <h1>Viết quy tắc để người lạ làm theo được.</h1>
+    <p class="sub">Một nhóm viết sổ quy tắc. Nhóm kia cầm đúng sổ đó, vẽ vài ảnh, không được hỏi. Họ vẽ sai hoặc phải hỏi nhiều thì quy tắc chưa dùng được.</p>
+    <p class="plate">Điểm chấm quy tắc, không chấm ai vẽ đẹp.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Trước khi mở ảnh</p>
+    <h2>Ba thứ phải bật.</h2>
+    <div class="cards">
+      <article class="card">
+        <h3>Docker</h3>
+        <p>Công tắc nguồn. Mở Docker Desktop, đợi chạy xong. Vào thư mục CVAT (thường tên <code>cvat-day2</code>), gõ <code>docker compose start</code>.</p>
+      </article>
+      <article class="card">
+        <h3>CVAT</h3>
+        <p>Trang để vẽ. Chrome, vào <code>localhost:8080</code>, đăng nhập tài khoản Day 2.</p>
+      </article>
+      <article class="card">
+        <h3>Terminal</h3>
+        <p>Ô chữ dưới Cursor. Menu Terminal → New Terminal. Dán một dòng, bấm Enter.</p>
+      </article>
+    </div>
+    <pre>cd đường\dẫn\tới\guideline-challenge
+py lab9.py status</pre>
+    <p class="dim">Mọi lệnh <code>py lab9.py</code> gõ khi Terminal đang đứng trong thư mục <code>guideline-challenge</code>. Lệnh <code>status</code> nói đúng việc còn thiếu.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Cách làm nhóm</p>
+    <h2>Một repo. Mỗi file một người.</h2>
+    <p>Một người tạo repo từ template, đặt đúng tên này. <code>TenNhom</code> đổi thành tên nhóm.</p>
+    <pre>K4-L2-DAY09-TenNhom - RoadElements</pre>
+    <p class="dim">Ví dụ nhóm 01: <code>K4-L2-DAY09-Nhom01 - RoadElements</code>. Giữ dấu cách trước dấu gạch ngang cuối.</p>
+    <ul>
+      <li>Sau khi tạo, vào Settings → Collaborators, thêm các bạn. Mọi người tải repo về máy.</li>
+      <li>Nhóm 3–5 người.</li>
+      <li>Mỗi file một người sửa chính, để đỡ đè nội dung của nhau.</li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Cả buổi, đúng thứ tự</p>
+    <h2>Tám bước.</h2>
+    <ol class="steps">
+      <li><span class="n">01</span><div><b>Chọn bài hẹp, ghi tên nhóm</b><span>00_team.md · 01_problem_statement.md</span></div></li>
+      <li><span class="n">02</span><div><b>Sổ quy tắc bản 1</b><span>02_guideline.md · Version thành v1</span></div></li>
+      <li><span class="n">03</span><div><b>Chia ảnh, dựng trang vẽ</b><span>sample_pack.csv · 03_cvat_labels.json</span></div></li>
+      <li><span class="n">04</span><div><b>Mỗi người tự vẽ, rồi so</b><span>file zip từng người · lên v2</span></div></li>
+      <li><span class="n">05</span><div><b>Viết đáp án, rồi chốt</b><span>gold_decisions.csv · lệnh freeze</span></div></li>
+      <li><span class="n">06</span><div><b>Gửi nhóm kia quy tắc và ảnh thi</b><span>Họ có 15 phút để vẽ. Nhóm mình không giải thích thêm</span></div></li>
+      <li><span class="n">07</span><div><b>Chấm bài họ</b><span>transfer_score.csv</span></div></li>
+      <li><span class="n">08</span><div><b>Sửa quy tắc lần 3, nộp</b><span>guideline v3</span></div></li>
+    </ol>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 01</p>
+    <h2>Bài toán phải hẹp thành một câu.</h2>
+    <p>“Gắn nhãn đèn giao thông” là quá rộng, không làm kịp.</p>
+    <p class="plate">Đèn này có phải đèn điều khiển xe mình không, khi ngã tư có nhiều đầu đèn.</p>
+    <p>Chỉ dùng ảnh có sẵn trong <code>data\</code>.</p>
+    <table>
+      <thead><tr><th>Muốn làm về</th><th>Ảnh</th><th>Nhớ</th></tr></thead>
+      <tbody>
+        <tr><td>Vạch, vùng đi được</td><td><code>data\bdd100k</code></td><td>26 ảnh đường phố và cao tốc</td></tr>
+        <tr><td>Biển báo</td><td><code>data\gtsdb</code> và một số ảnh BDD</td><td>Biển Đức. Có ảnh không có biển</td></tr>
+        <tr><td>Đèn</td><td>BDD có đèn, và <code>data\lisa</code></td><td>LISA chỉ là một đoạn 30 tấm</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 01 · file 01_problem_statement.md</p>
+    <h2>Bốn câu, xoá hết chữ TODO.</h2>
+    <ol>
+      <li>Ai dùng kết quả gắn nhãn này?</li>
+      <li>Người vẽ phải khoanh cái gì, và trả lời thêm câu hỏi gì?</li>
+      <li>Vẽ sai kiểu nào thì hậu quả lớn nhất?</li>
+      <li>Nhìn ảnh mà không chắc thì làm gì, ghi ở đâu trên CVAT?</li>
+    </ol>
+    <pre>py lab9.py samples --source bdd100k</pre>
+    <p class="dim">Đổi <code>bdd100k</code> thành <code>gtsdb</code> hoặc <code>lisa</code> để xem ảnh nguồn đó.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 02 · 02_guideline.md</p>
+    <h2>Quy tắc không ghi vào file thì coi như không có.</h2>
+    <p>File này là thứ nhóm kia nhận. Trong file có 10 mục. Mỗi mục xoá TODO và viết bằng lời nhóm.</p>
+    <ul>
+      <li>Vẽ cái gì, không vẽ cái gì.</li>
+      <li>Vẽ khung, kẻ đường, hay tô vùng.</li>
+      <li>Loại nhãn nào, câu hỏi phụ nào, khi nào chọn “không biết”.</li>
+      <li>Bị che, quá nhỏ, quá xa thì làm sao.</li>
+      <li>Không chắc thì gắn nhãn, bỏ qua, chọn <code>unknown</code>, hay đánh dấu cần người khác xem. Mỗi cách phải là một lựa chọn nhìn thấy trên CVAT.</li>
+      <li>Ảnh đứng yên, không phải video: mục theo thời gian ghi “không dùng cho bài này”.</li>
+    </ul>
+    <p>Xong bản đầu, đổi dòng <code>Version:</code> thành <code>v1</code>.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 02 · trường hợp khó</p>
+    <h2>Chỗ hai người có thể làm khác nhau, ghi thành thẻ.</h2>
+    <p>File <code>project\04_edge_cases\edge_case_cards.md</code>.</p>
+    <ul>
+      <li>Cuối buổi ít nhất <strong>8 trường hợp</strong>.</li>
+      <li>Có trường hợp nếu làm sai thì hậu quả lớn.</li>
+      <li>Có trường hợp người vẽ không chắc thì đánh dấu để người khác xem.</li>
+    </ul>
+    <p class="dim">Thẻ này là của nhóm mình. Không gửi cho nhóm kia.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 03 · sample_pack.csv</p>
+    <h2>Chia ảnh thành ba loại.</h2>
+    <p>Mỗi ảnh một dòng. Một ảnh chỉ thuộc một loại. Giữ dòng tiêu đề. Trong file, cột <code>split</code> ghi đúng chữ tiếng Anh bên dưới, máy chỉ nhận các chữ đó.</p>
+    <div class="cards">
+      <article class="card">
+        <h3>example</h3>
+        <p>Ảnh ví dụ trong sổ quy tắc. Khoảng 3–5 ảnh.</p>
+      </article>
+      <article class="card">
+        <h3>calibration</h3>
+        <p>Cả nhóm cùng vẽ để tìm câu quy tắc viết chưa rõ, hai người hiểu khác nhau. Khoảng 5–8 ảnh.</p>
+      </article>
+      <article class="card">
+        <h3>blind</h3>
+        <p>Ảnh thi, đưa cho nhóm kia. Nhóm mình không cho họ xem trước. Khoảng 4–5 ảnh.</p>
+      </article>
+    </div>
+    <p>Cột <code>tags</code> ghi vì sao chọn ảnh, cách nhau bằng dấu chấm phẩy. Ví dụ <code>edge;occlusion</code> (<code>edge</code> = ảnh khó, <code>occlusion</code> = bị vật khác che). Giữ chữ tiếng Anh, máy chỉ nhận đúng các chữ này. Cột <code>reason</code>: một câu, ảnh này thử quy tắc nào.</p>
+    <p>Ảnh thi phải gắn đủ các chữ này trong cột <code>tags</code>: 1 ảnh <code>normal</code> (dễ, nhìn rõ), 2 ảnh <code>edge</code> (khó, dễ vẽ khác nhau), 1 ảnh <code>critical</code> (vẽ sai ảnh này thì hậu quả lớn, ví dụ bỏ sót đèn đang điều khiển xe). Dùng 5 ảnh thì thêm 1 ảnh <code>ambiguity</code> (nhìn ảnh vẫn không biết phải vẽ thế nào).</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 03 · dựng CVAT</p>
+    <h2>Gom ảnh cả nhóm sẽ cùng vẽ, rồi tạo task.</h2>
+    <pre>py lab9.py pack calibration</pre>
+    <p>Ảnh nằm ở <code>build\calibration\</code>.</p>
+    <ol>
+      <li>Viết <code>03_cvat_labels.json</code> khớp bảng trong <code>03_ontology_and_cvat_setup.md</code>. Copy hết, dán vào tab <strong>Raw</strong> khi tạo task. Muốn bắt người vẽ phải chọn, để mặc định là <code>__undefined__</code>.</li>
+      <li>Tạo task, tên kiểu <code>ten-nhom-calib-ten-ban</code>. Chọn hết ảnh trong <code>build\calibration\</code>.</li>
+      <li>Ở trang task, dán nguyên <code>02_guideline.md</code> vào phần mô tả. Người vẽ bấm nút <strong>Guide</strong> là thấy sổ quy tắc.</li>
+    </ol>
+    <p>Một bạn chưa dựng task phải mở lên và làm được ngay. Ghi kết quả thử vào <code>03_ontology_and_cvat_setup.md</code>.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 04</p>
+    <h2>Mỗi người tự vẽ. Rồi mới so.</h2>
+    <ul>
+      <li>Mỗi người một task trên máy mình. Cùng bộ ảnh đó, cùng quy tắc <code>v1</code>.</li>
+      <li>Không nhìn màn hình nhau. Không bàn trước cách vẽ cho giống nhau.</li>
+      <li>Export: <strong>CVAT for images 1.1</strong>, tắt Save images.</li>
+      <li>Đổi tên file thành tên mình, ví dụ <code>an.zip</code>, bỏ vào <code>project\06_calibration_exports\</code>.</li>
+    </ul>
+    <pre>py lab9.py calib project/06_calibration_exports/an.zip project/06_calibration_exports/binh.zip</pre>
+    <p>Máy không nói ai đúng. Máy chỉ liệt kê chỗ hai người làm khác nhau.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 04 · 06_calibration_report.csv</p>
+    <h2>Chọn ít nhất 3 chỗ lệch lớn.</h2>
+    <p>Mỗi chỗ ghi bốn ý:</p>
+    <ul>
+      <li>Ảnh nào, khác cái gì.</li>
+      <li>Mỗi người đã làm gì.</li>
+      <li>Vì sao lệch: quy tắc thiếu, ảnh không đủ nhìn, hay quy tắc rõ mà người vẽ làm sai.</li>
+      <li>Sửa quy tắc thế nào.</li>
+    </ul>
+    <p>Sửa <code>02_guideline.md</code>, đổi Version thành <code>v2</code>. Ghi một dòng vào <code>08_revision_log.md</code>.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 05 · gold_decisions.csv</p>
+    <h2>Viết đáp án trước khi nhóm kia thấy ảnh.</h2>
+    <ul>
+      <li>Ít nhất <strong>10 dòng</strong>. Mỗi ảnh thi có ít nhất một dòng.</li>
+      <li>Ít nhất <strong>2 dòng</strong> là chỗ vẽ sai thì hậu quả lớn. Trong file ghi chữ <code>critical</code>.</li>
+      <li>Ít nhất <strong>1 dòng</strong> nói về hình vẽ: ô expected bắt đầu bằng chữ <code>geometry:</code>. Máy nhận đúng chữ này.</li>
+    </ul>
+    <pre>BDD07,d1,label=traffic_light x2,major,hai đầu đèn nhìn thấy vỏ</pre>
+    <p>Nghĩa là ảnh BDD07, quyết định 1, phải có 2 khung đèn, mức lỗi lớn, vì nhìn thấy vỏ hai đầu đèn.</p>
+    <p>Viết sao cho cầm file của nhóm kia là biết đúng hay sai. Quyết định “ảnh này không có biển” dễ sai: mình bỏ sót một biển thì họ vẽ đúng vẫn bị chấm sai. Mở từng ảnh thi cỡ gốc trước khi chốt.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 05 · chỉ một người</p>
+    <h2>Chốt đáp án.</h2>
+    <pre>py lab9.py freeze</pre>
+    <p>Máy kiểm tra quy tắc đã là v2, đã có nhãn, đã chia ảnh, đã có đáp án. Người đó đẩy lên GitHub ngay. Mọi người khác gõ:</p>
+    <pre>git pull
+git fetch --tags --force</pre>
+    <div class="stop">Sau lệnh này không sửa đáp án và không đổi cách chia ảnh.</div>
+    <p>Cần sửa trước khi gửi quy tắc và ảnh thi cho nhóm kia, và chưa nhận bài của họ:</p>
+    <pre>py lab9.py freeze --refreeze</pre>
+    <p class="dim">Rồi cả nhóm kéo code về lại bằng hai lệnh git ở trên.</p>
+  </section>
+
+  <section class="slide pack">
+    <p class="kicker">Bước 06</p>
+    <h2>Gửi nhóm kia quy tắc và ảnh thi.</h2>
+    <p>Không gửi đáp án. Họ có 15 phút để vẽ. Trong 15 phút đó, nhóm mình không được đứng cạnh giải thích quy tắc.</p>
+    <pre>py lab9.py handoff</pre>
+    <p>Máy tạo <code>handoff\blind-pack.zip</code>. Gói này chỉ có bốn thứ:</p>
+    <ul>
+      <li><code>guideline.md</code> — sổ quy tắc.</li>
+      <li><code>cvat_labels.json</code> — danh sách nhãn, dán vào tab Raw.</li>
+      <li>thư mục <code>images</code> — ảnh thi.</li>
+      <li><code>PEER_README.md</code> — cách tạo task trên CVAT máy họ, và 5 câu nhận xét phải trả lời.</li>
+    </ul>
+    <p>Không có file đáp án, không có thẻ trường hợp khó. Gửi gói đó cho nhóm kia qua kênh giáo viên chỉ.</p>
+    <div class="stop">Họ hỏi câu nào, không trả lời miệng. Ghi câu hỏi vào <code>clarification_log.csv</code>. Càng nhiều câu hỏi, sổ quy tắc càng chưa đủ để người lạ tự làm.</div>
+    <p>Lỗi máy (CVAT, Docker) thì gọi giáo viên. Lỗi máy không ghi vào file câu hỏi.</p>
+    <p>Khi nhóm mình nhận bài của nhóm khác: mở gói họ gửi, vẽ theo đúng chữ trong quy tắc của họ, không đoán ý. Gửi lại file bài vẽ và trả lời 5 câu nhận xét trong hướng dẫn kèm theo.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 07</p>
+    <h2>Chấm bài nhóm kia.</h2>
+    <pre>py lab9.py score "C:\duong\dan\file-nhom-kia.zip"
+py lab9.py gts</pre>
+    <ul>
+      <li>Điền <code>transfer_score.csv</code>: đúng là <code>1</code>, sai là <code>0</code>, kèm một câu ghi chú.</li>
+      <li>Chạy lại lệnh score không xoá ô đã điền.</li>
+      <li>Điểm lệnh <code>gts</code> in ra đo quy tắc của mình người khác làm theo được hay không, không đo nhóm kia giỏi hay kém.</li>
+      <li>Họ sai: ghi vì quy tắc thiếu, ảnh không đủ nhìn, hay họ làm không đúng quy tắc đã rõ.</li>
+      <li>Chép 5 câu của họ vào <code>peer_feedback.md</code>.</li>
+    </ul>
+    <p>Đáp án mình đã chốt bị sai mà họ làm đúng theo ảnh: vẫn cho <code>0</code>, câu ghi chú bắt đầu bằng <code>gold sai:</code>.</p>
+    <p class="dim">Muốn xem hình họ vẽ: mục 6 trong <code>GUIDE.md</code> — tạo task với ảnh thi, rồi upload file của họ.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Bước 08</p>
+    <h2>Sửa lần cuối, rồi nộp.</h2>
+    <ul>
+      <li><code>02_guideline.md</code> lên <code>v3</code> theo chỗ nhóm kia vấp. Ghi dòng v3 trong <code>08_revision_log.md</code>.</li>
+      <li><code>edge_case_cards.md</code> đủ ít nhất 8 trường hợp.</li>
+      <li>Điền <code>09_cvat_export_or_task_reference.txt</code>.</li>
+      <li>Xoá hết chữ <code>TODO</code> trong thư mục <code>project\</code>.</li>
+    </ul>
+    <pre>py lab9.py check
+
+git add project
+git commit -m "Day 9 project submission"
+git push --follow-tags</pre>
+    <p>Cuối buổi mỗi cặp nói khoảng 2 phút. Nhóm viết quy tắc nói chỗ quy tắc không dùng được và đã sửa gì. Nhóm đi vẽ nói chỗ khó nhất.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Khi kẹt</p>
+    <h2>Đừng ngồi chờ. Làm đúng dòng này.</h2>
+    <table>
+      <thead><tr><th>Đang xảy ra</th><th>Làm</th></tr></thead>
+      <tbody>
+        <tr><td>Không biết còn thiếu gì</td><td><code>py lab9.py status</code></td></tr>
+        <tr><td>Trang CVAT không mở</td><td>Mở Docker, vào <code>cvat-day2</code>, <code>docker compose start</code>, đợi một phút, rồi <code>py lab9.py cvat</code></td></tr>
+        <tr><td>Hai người cùng bấm freeze</td><td>Chỉ một người. Người kia <code>git pull</code> rồi <code>git fetch --tags --force</code></td></tr>
+        <tr><td>Báo chưa có tag gold-freeze</td><td>Người giữ đáp án freeze lại và push. Người khác kéo tag về</td></tr>
+        <tr><td>“Cái này có phải làn xe không?”</td><td>Nhóm tự quyết, ghi thành quy tắc, hoặc ghi không chắc. Giáo viên không chọn hộ</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<button class="nav-btn prev" type="button" id="prev" aria-label="Slide trước">‹</button>
+<button class="nav-btn next" type="button" id="next" aria-label="Slide sau">›</button>
+
+<footer class="bar">
+  <div class="hint"><kbd>←</kbd> <kbd>→</kbd> chuyển slide · <kbd>F</kbd> toàn màn hình</div>
+  <div class="lane-track" aria-hidden="true"><div class="lane-fill" id="lane"></div></div>
+  <div class="km"><b id="now">01</b> / <span id="all">18</span></div>
+</footer>
+
+<script>
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const now = document.getElementById("now");
+  const all = document.getElementById("all");
+  const lane = document.getElementById("lane");
+  let i = 0;
+
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle("is-on", idx === i));
+    now.textContent = String(i + 1).padStart(2, "0");
+    all.textContent = String(slides.length).padStart(2, "0");
+    const span = slides.length < 2 ? 1 : i / (slides.length - 1);
+    lane.style.width = (span * 100) + "%";
+    const on = slides[i];
+    on.scrollTop = 0;
+    if (location.hash !== "#" + (i + 1)) history.replaceState(null, "", "#" + (i + 1));
+  }
+
+  function step(d) { show(i + d); }
+
+  document.getElementById("prev").addEventListener("click", () => step(-1));
+  document.getElementById("next").addEventListener("click", () => step(1));
+
+  document.addEventListener("keydown", (e) => {
+    if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); step(1); }
+    else if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); step(-1); }
+    else if (e.key === "Home") { e.preventDefault(); show(0); }
+    else if (e.key === "End") { e.preventDefault(); show(slides.length - 1); }
+    else if (e.key === "f" || e.key === "F") {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  let startX = 0;
+  document.addEventListener("touchstart", (e) => { startX = e.changedTouches[0].clientX; }, { passive: true });
+  document.addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  const fromHash = parseInt(location.hash.slice(1), 10);
+  show(Number.isFinite(fromHash) ? fromHash - 1 : 0);
+</script>
+</body>
+</html>
