@@ -66,13 +66,13 @@ Diversity: small_far
 
 CASE ID: EC-06
 Sample: GTS10
-Scene: Giao lộ có nhánh rẽ phụ tách sang bên phải
-Observation: Hai biển hiệu lệnh rẽ phải `33 go right` cắm ở lối vào nhánh rẽ phụ. Xe ego đang di chuyển trên trục đường thẳng chính.
+Scene: Giao lộ có 2 biển hiệu lệnh cùng loại 33 go right ở 2 vị trí khác nhau
+Observation: Hai biển hiệu lệnh rẽ phải 33 go right xuất hiện trong cùng khung cảnh: một biển cắm bên phải làn tiếp cận ngã rẽ và một biển cắm ở góc phía xa đối diện.
 Decision: LABEL
-Expected: Vẽ 2 box cho 2 biển, gán `relevance = not_relevant`, `sign_family = mandatory`, `sign_class = 33 go right`.
-Rationale: Biển chỉ áp dụng cho các phương tiện chuyển hướng đi vào nhánh rẽ phụ, không bắt buộc xe ego đang duy trì làn thẳng trên trục chính phải rẽ.
-Common mistake: Gán `relevance = relevant` khiến xe tự hành hiểu nhầm bắt buộc phải rẽ phải ngay lập tức.
-Diversity: ambiguity
+Expected: Vẽ 2 box riêng cho 2 biển. Biển cắm trực tiếp bên phải làn tiếp cận đón đầu ego gán relevance = relevant; biển cắm ở góc đối diện/phía xa gán relevance = not_relevant.
+Rationale: Biển cùng loại sign_class nhưng relevance quyết định theo vị trí không gian tương quan với làn của ego, không suy diễn theo loại biển.
+Common mistake: Mặc định gán cùng một giá trị relevance cho cả hai biển chỉ vì chúng cùng chung một mã sign_class.
+Diversity: conflict
 
 ---
 
