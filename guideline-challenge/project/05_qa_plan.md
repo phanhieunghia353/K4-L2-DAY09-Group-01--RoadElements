@@ -28,22 +28,22 @@ Bảng phân loại mức độ nghiêm trọng của lỗi dựa trên tác đ�
 | Severity | Định nghĩa cho project này | Ví dụ | Action mặc định |
 |---|---|---|---|
 | Critical | Lỗi làm thay đổi quyết định sống còn của xe ego: Bỏ sót hoặc đánh nhãn `not_relevant` cho biển cấm/dừng/hiệu lệnh khống chế ego; hoặc đánh nhãn `relevant` cho biển xe tải/làn khác gây phanh gấp. | Đánh nhãn `not_relevant` cho biển `14 stop` hoặc `17 no entry`; đánh nhãn `relevant` cho biển `10 no overtaking (trucks)`. | REWORK ngay lập tức; chặn release batch; đào tạo lại annotator. |
-| Major | Sai lệch về phân loại họ biển/mã biển hoặc sai lệch geometry ảnh hưởng lớn đến mô hình phát hiện. | Nhầm `02 speed limit 50` thành `01 speed limit 30`; vẽ gộp 2 biển trên cùng cột vào 1 box lớn; box lệch $> 5$ px. | REWORK trong vòng 24h trước khi merge dữ liệu. |
+| Major | Sai lệch về phân loại họ biển/mã biển hoặc sai lệch geometry ảnh hưởng lớn đến mô hình phát hiện. | Nhầm `02 speed limit 50` thành `01 speed limit 30`; vẽ gộp 2 biển trên cùng cột vào 1 box lớn; box lệch > 5 px. | REWORK trong vòng 24h trước khi merge dữ liệu. |
 | Minor | Sai lệch nhỏ về thuộc tính phụ hoặc hình học trong khoảng dung sai không làm đổi hành vi xe. | Lệch viền 2–3 px; đánh nhầm `readable = yes` trong khi biển hơi mờ (`uncertain`). | Chấp nhận (ACCEPT) hoặc sửa nhanh nếu thuận tiện. |
-| Question | Tình huống mơ hồ, chất lượng ảnh quá kém hoặc xung đột luật chưa có tiền lệ trong guideline. | Biển ở cự ly quá xa không rõ hướng mũi tên; biển bị che khuất $\ge 70\%$ diện tích. | Gán `relevance = unknown`, bật `needs_review`, chuyển Spec Owner xử lý. |
+| Question | Tình huống mơ hồ, chất lượng ảnh quá kém hoặc xung đột luật chưa có tiền lệ trong guideline. | Biển ở cự ly quá xa không rõ hướng mũi tên; biển bị che khuất >= 70% diện tích. | Gán `relevance = unknown`, bật `needs_review`, chuyển Spec Owner xử lý. |
 
 ## Metrics
 
 1. **Decision Accuracy (D):**
-   $$D = \frac{\text{Số quyết định đúng (non-geometry)}}{\text{Tổng số quyết định non-geometry}}$$
+   D = (Số quyết định đúng non-geometry) / (Tổng số quyết định non-geometry)
    Đo lường độ chính xác phân loại class, họ biển và relevance.
 
 2. **Critical Decision Correctness (C):**
-   $$C = \frac{\text{Số quyết định critical đúng}}{\text{Tổng số quyết định critical}}$$
+   C = (Số quyết định critical đúng) / (Tổng số quyết định critical)
    Đảm bảo không xảy ra hiện tượng lọt lỗi nghiêm trọng (Critical Defect Escape).
 
 3. **Geometry Compliance (G):**
-   Tỷ lệ bounding box đạt dung sai $\le 3$ px ở mọi cạnh và không bao gồm cột đỡ/giá treo.
+   Tỷ lệ bounding box đạt dung sai <= 3 px ở mọi cạnh và không bao gồm cột đỡ/giá treo.
 
 4. **Independence Score (I):**
    Đo lường tính độc lập của người nhận bàn giao (dựa trên số câu hỏi cần giải thích ngoài guideline trong `clarification_log.csv`).
@@ -67,4 +67,4 @@ REJECT / ESCALATE if:
   - Xuất hiện xung đột hệ thống trong guideline khiến người làm liên tục hiểu sai (Guideline Gap hệ thống) -> Tạm dừng dán nhãn, triệu tập Spec Owner để cập nhật Guideline.
 ```
 
-**Trade-off:** Nhóm chấp nhận dung sai hình học nhỏ ($\le 3$ px) và cho phép `sign_class = unknown` khi biển ở xa (`readable = no`), nhưng tuyệt đối không thỏa hiệp với lỗi `relevance` trên các biển an toàn cao (`14 stop`, `17 no entry`, `10 no overtaking (trucks)`). Sự an toàn downstream là ưu tiên số một.
+**Trade-off:** Nhóm chấp nhận dung sai hình học nhỏ (<= 3 px) và cho phép `sign_class = unknown` khi biển ở xa (`readable = no`), nhưng tuyệt đối không thỏa hiệp với lỗi `relevance` trên các biển an toàn cao (`14 stop`, `17 no entry`, `10 no overtaking (trucks)`). Sự an toàn downstream là ưu tiên số một.

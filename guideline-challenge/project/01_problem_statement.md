@@ -27,23 +27,23 @@ Xác định ranh giới hình học và phân loại mức độ liên quan/hi�
 
 ## Scope
 
-- **Trong scope (bắt buộc label):** Mọi biển báo giao thông thuộc 4 nhóm (cấm, hiệu lệnh, nguy hiểm, khác) có mặt trước hướng về phía xe ego (nhìn thấy được mặt biển hoặc ký hiệu) với kích thước tối thiểu $\ge 10\times 10$ pixels. Bao gồm biển bên phải, bên trái, trên giá long môn và trên đảo giao thông.
+- **Trong scope (bắt buộc label):** Mọi biển báo giao thông thuộc 4 nhóm (cấm, hiệu lệnh, nguy hiểm, khác) có mặt trước hướng về phía xe ego (nhìn thấy được mặt biển hoặc ký hiệu) với kích thước tối thiểu >= 10x10 pixels. Bao gồm biển bên phải, bên trái, trên giá long môn và trên đảo giao thông.
 - **Ngoài scope (ignore):**
   - Mặt sau của biển báo quay về hướng ngược lại (không thấy ký hiệu mặt biển).
   - Biển báo bị che khuất hoàn toàn (100%).
   - Biển báo phụ tư nhân, biển quảng cáo, biển tên đường nhỏ, biển số nhà không thuộc quy chuẩn đường bộ.
-  - Biển quá nhỏ ($< 10\times 10$ pixels) hoặc mờ nhòe tới mức không thể xác định được hình dạng hình học.
-- **Geometry tolerance:** Bounding box ôm sát viền ngoài cùng của mặt biển hiển thị (tight bounding box), dung sai $\le 3$ px ở mỗi cạnh. Tuyệt đối không lấy cột đỡ, giá treo hoặc khoảng trống nền trời.
+  - Biển quá nhỏ (< 10x10 pixels) hoặc mờ nhòe tới mức không thể xác định được hình dạng hình học.
+- **Geometry tolerance:** Bounding box ôm sát viền ngoài cùng của mặt biển hiển thị (tight bounding box), dung sai <= 3 px ở mỗi cạnh. Tuyệt đối không lấy cột đỡ, giá treo hoặc khoảng trống nền trời.
 
 ## Output chấm được
 
 Mọi quyết định đều hiển thị tường minh trong file xuất CVAT (`annotations.xml`):
-- Quyết định hình học: Box ôm khít viền mặt biển ($\le 3$ px tolerance).
+- Quyết định hình học: Box ôm khít viền mặt biển (<= 3 px tolerance).
 - Quyết định phân loại: Đúng `sign_family` và `sign_class`.
 - Quyết định hiệu lực: Đúng `relevance` (`relevant`, `not_relevant`, `unknown`).
 - Quyết định trạng thái: `readable` (`yes`, `no`, `uncertain`), cờ `truncated`, cờ `needs_review`, và tag `image_escalate`.
 
 ## Dữ liệu và giới hạn
 
-- **Nguồn dữ liệu:** 28 ảnh GTSDB chuẩn (`data/gtsdb/GTS01.png` đến `GTS28.png`), kích thước $1360 \times 800$ px.
+- **Nguồn dữ liệu:** 28 ảnh GTSDB chuẩn (`data/gtsdb/GTS01.png` đến `GTS28.png`), kích thước 1360 x 800 px.
 - **Giới hạn đã biết:** Dữ liệu là ảnh tĩnh (single frame), giao thông Đức (Công ước Vienna, tay lái bên phải đường). Có các ảnh âm tính (negative samples: `GTS07`, `GTS24`) không có bất kỳ biển báo nào để kiểm tra khả năng không sinh False Positive của người gán nhãn.

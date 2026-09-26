@@ -55,7 +55,7 @@ Diversity: negative
 CASE ID: EC-05
 Sample: GTS06
 Scene: Đường phố ban ngày, biển ở cự ly xa
-Observation: Một biển giới hạn tốc độ cắm bên phải đường nhưng kích thước nhỏ do khoảng cách xa ($< 25\times 25$ px).
+Observation: Một biển giới hạn tốc độ cắm bên phải đường nhưng kích thước nhỏ do khoảng cách xa (< 25x25 px).
 Decision: LABEL
 Expected: Vẽ box ôm khít biển, gán `sign_family = prohibitory`, `readable = no`, `sign_class = unknown`, `relevance = relevant`.
 Rationale: Nhìn rõ hình tròn viền đỏ chứng tỏ là biển cấm khống chế làn, nhưng không thể đọc rõ con số; tuyệt đối không đoán mò số 30 hay 50.
