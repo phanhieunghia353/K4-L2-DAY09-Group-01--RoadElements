@@ -27,7 +27,7 @@ Bảng ontology là **source of truth** cho schema CVAT: `03_cvat_labels.json` p
 
 ## CVAT
 
-- **Phiên bản CVAT:** CVAT v2.74.1 (chạy local qua Docker tại `http://localhost:8080`)
+- **Phiên bản CVAT:** CVAT v2.75.1 (chạy local qua Docker tại `http://localhost:8888`)
 - **Tên task calibration:** `group1-calib-v1`
 - **Guide của task đã dán `02_guideline.md`?** Có (dán toàn bộ nội dung Markdown của guideline vào mục Guide của task trên CVAT).
 - **Nhóm dùng Track hay Shape, vì sao:** Dùng **Shape** (Rectangle). Vì tập dữ liệu GTSDB là các ảnh chụp đơn lẻ tĩnh (single frames độc lập từ các địa điểm khác nhau), không phải chuỗi video liên tục, nên không có sự dịch chuyển hay kế thừa trạng thái giữa các frame.
