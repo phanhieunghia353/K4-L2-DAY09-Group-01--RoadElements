@@ -8,3 +8,6 @@ Cột Version ghi dạng `v1`, `v2`, `v3` — `make status` tìm dòng bảng c�
 
 | Version | Đổi gì | Vì sao | Bằng chứng |
 |---|---|---|---|
+| v1 | Khởi tạo Guideline v1 với 10 mục bắt buộc | Định hình phạm vi và bộ quy tắc gán nhãn ban đầu | `01_problem_statement.md`, `03_cvat_labels.json` |
+| v2 | Bổ sung quy tắc xe con cho biển xe tải (`not_relevant`), cấm đoán số khi `readable=no`, và làm rõ biển đảo giao thông | Kết quả bất đồng calibration nội bộ cho thấy annotator nhầm lẫn biển xe tải và phỏng đoán class khi biển ở xa | `06_calibration_report.csv` dòng GTS04, GTS03, GTS06 |
+
