@@ -13,13 +13,13 @@ Tài liệu này là quy chuẩn hướng dẫn gán nhãn cho dự án Nhận d
   2. Loại biển báo (cấm, hiệu lệnh, nguy hiểm, cảnh báo).
   3. **Biển báo đó có bắt buộc xe ego phải tuân thủ hành vi hay không (`relevance`)**.
 - **Phạm vi trong scope (bắt buộc gán nhãn):**
-  - Mọi biển báo giao thông chuẩn thuộc 4 nhóm (prohibitory, mandatory, danger, other) hướng mặt về phía xe (nhìn thấy được mặt trước hoặc biểu tượng) có kích thước $\ge 10\times 10$ pixels.
+  - Mọi biển báo giao thông chuẩn thuộc 4 nhóm (prohibitory, mandatory, danger, other) hướng mặt về phía xe (nhìn thấy được mặt trước hoặc biểu tượng) có kích thước >= 10x10 pixels.
   - Bao gồm biển cắm bên phải đường, bên trái đường, trên dải phân cách giữa/đảo giao thông, và trên giá long môn.
 - **Phạm vi ngoài scope (bỏ qua - IGNORE, không vẽ box):**
   - Mặt sau của biển báo quay về hướng xe ego (chỉ thấy lưng kim loại hoặc khung đỡ).
-  - Biển báo bị che khuất hoàn toàn ($100\%$).
+  - Biển báo bị che khuất hoàn toàn (100%).
   - Biển quảng cáo, biển tên đường nhỏ, biển số nhà, biển báo công trình tư nhân không thuộc hệ thống biển báo đường bộ chuẩn.
-  - Biển quá nhỏ ($< 10\times 10$ pixels) hoặc mờ nhòe tới mức mắt người không thể nhận diện được hình dạng hình học.
+  - Biển quá nhỏ (< 10x10 pixels) hoặc mờ nhòe tới mức mắt người không thể nhận diện được hình dạng hình học.
 
 ---
 
@@ -35,8 +35,8 @@ Tài liệu này là quy chuẩn hướng dẫn gán nhãn cho dự án Nhận d
 
 - **Tight bounding box:** Bounding box phải ôm khít viền mép ngoài cùng của mặt biển hiển thị (visible boundary).
 - **Không bao gồm phụ kiện:** Tuyệt đối không kéo box trùm qua cột đỡ, thanh giằng kim loại, giá treo hoặc khoảng trống nền trời xung quanh.
-- **Biển bị che một phần (Occlusion):** Vẽ box ôm trọn phần nhìn thấy được của mặt biển (visible area). Nếu phần bị che $\ge 10\%$ diện tích biển nhưng vẫn nhận biết được hình học, bật cờ `needs_review`.
-- **Dung sai hình học (Tolerance):** Sai số biên $\le 3$ pixels ở mỗi cạnh so với mép thực tế của mặt biển.
+- **Biển bị che một phần (Occlusion):** Vẽ box ôm trọn phần nhìn thấy được của mặt biển (visible area). Nếu phần bị che >= 10% diện tích biển nhưng vẫn nhận biết được hình học, bật cờ `needs_review`.
+- **Dung sai hình học (Tolerance):** Sai số biên <= 3 pixels ở mỗi cạnh so với mép thực tế của mặt biển.
 
 ---
 
@@ -70,7 +70,7 @@ Chọn 1 trong 43 mã biển chuẩn từ `00` đến `42` theo danh mục GTSDB
 
 ### 4.4 Thuộc tính chất lượng
 - `readable`:
-  - `yes`: Đọc rõ ràng con số/biểu tượng mặt biển ở tỷ lệ thu phóng $100\%$.
+  - `yes`: Đọc rõ ràng con số/biểu tượng mặt biển ở tỷ lệ thu phóng 100%.
   - `no`: Nhìn thấy có mặt biển nhưng không thể đọc được nội dung bên trong.
   - `uncertain`: Nửa rõ nửa mờ, phán đoán không chắc chắn.
 - `truncated`: Checkbox `true` nếu biển bị mép ảnh cắt mất một phần.
@@ -92,8 +92,8 @@ Chọn 1 trong 43 mã biển chuẩn từ `00` đến `42` theo danh mục GTSDB
 
 ## 6. Visibility / occlusion
 
-1. **Che khuất một phần ($< 50\%$):** Vẽ bounding box ôm phần mặt biển hiển thị. Gán `readable = yes` nếu vẫn đọc được ký hiệu chính, gán `readable = uncertain` nếu ký hiệu bị che mất một phần quan trọng.
-2. **Che khuất nặng ($\ge 50\%$):** Vẽ box phần nhìn thấy, chọn `readable = no`, `sign_class = unknown`, và bật `needs_review = true`.
+1. **Che khuất một phần (< 50%):** Vẽ bounding box ôm phần mặt biển hiển thị. Gán `readable = yes` nếu vẫn đọc được ký hiệu chính, gán `readable = uncertain` nếu ký hiệu bị che mất một phần quan trọng.
+2. **Che khuất nặng (>= 50%):** Vẽ box phần nhìn thấy, chọn `readable = no`, `sign_class = unknown`, và bật `needs_review = true`.
 3. **Cắt mép ảnh (Truncation):** Nếu biển bị cắt mép nhưng nhận ra được họ biển, vẽ box bám mép ảnh và đánh dấu `truncated = true`.
 
 ---
